@@ -10,7 +10,7 @@ const Settings = {
 ReactDOM.render(
     <App
       quantity={Settings.OFFERS_QUANTITY}
-      title={Settings.TITLES}
+      titles={Settings.TITLES}
     />,
     document.getElementById(`root`)
 );
