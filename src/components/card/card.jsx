@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Card = ({name, index}) => {
+const Card = ({name}) => {
   return (
-    <article className="cities__place-card place-card" key={index}>
+    <article className="cities__place-card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image" />
@@ -39,8 +39,7 @@ const Card = ({name, index}) => {
 
 
 Card.propTypes = {
-  name: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired
+  name: PropTypes.string.isRequired
 };
 
 export default Card;
