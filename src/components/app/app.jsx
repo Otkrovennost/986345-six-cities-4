@@ -2,9 +2,15 @@ import React from "react";
 import Main from "../main/main.jsx";
 import PropTypes from "prop-types";
 
+const titleClickHandler = () => {};
+
 const App = ({quantity, titles}) => {
   return (
-    <Main quantity={quantity} titles={titles}/>
+    <Main
+      quantity={quantity}
+      titles={titles}
+      onTitleClick={titleClickHandler}
+    />
   );
 };
 
