@@ -2,16 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Card = ({offer, onTitleClick, onMouseOver}) => {
-  const {title, price, type, rating, photo, isPremium} = offer;
+  const {id, title, price, type, rating, photo, isPremium} = offer;
 
   const ratingPercentage = `${rating * 20}%`;
   const premiumClass = isPremium ? `place-card__mark` : `place-card__mark visually-hidden`;
 
   return (
     <article className="cities__place-card place-card"
-      key={offer.id}
+      key={id}
       onMouseOver={() => {
-        onMouseOver(offer);
+        onMouseOver(id);
       }}
     >
       <div className={premiumClass}>

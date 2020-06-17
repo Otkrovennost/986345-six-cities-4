@@ -32,13 +32,13 @@ describe(`Card`, () => {
 
     const title = card.find(`h2.place-card__name`);
 
-    title.props().onClick();
+    title.simulate(`click`);
 
     expect(onTitleClick.mock.calls.length).toBe(1);
 
     card.find(`.place-card`).simulate(`mouseOver`);
 
     expect(onMouseOver).toHaveBeenCalledTimes(1);
-    expect(onMouseOver).toHaveBeenCalledWith(offer);
+    expect(onMouseOver).toHaveBeenCalledWith(offer.id);
   });
 });

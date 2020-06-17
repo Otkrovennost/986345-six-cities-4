@@ -13,9 +13,9 @@ class CardsList extends PureComponent {
     this.handleCardHover = this.handleCardHover.bind(this);
   }
 
-  handleCardHover(offer) {
+  handleCardHover(offerId) {
     this.setState({
-      activeCard: offer
+      activeCard: offerId
     });
   }
 

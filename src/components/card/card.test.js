@@ -16,7 +16,6 @@ it(`Should Card render correctly`, () => {
   const tree = renderer
     .create(<Card
       offer={offer}
-      key={offer.id}
       onTitleClick={() => {}}
       onMouseOver={() => {}}
     />)
