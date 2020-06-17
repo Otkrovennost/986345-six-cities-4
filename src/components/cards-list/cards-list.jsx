@@ -1,23 +1,46 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import Card from "../card/card.jsx";
 
-const CardsList = ({titles, onTitleClick}) => {
-  return (
-    <div className="cities__places-list places__list tabs__content">
-      {titles.map((name, index) =>
-        <Card
-          name={name}
-          key={index}
-          onTitleClick={onTitleClick}
-        />
-      )}
-    </div>
-  );
-};
+class CardsList extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeCard: null
+    };
+
+    this.handleCardHover = this.handleCardHover.bind(this);
+  }
+
+  handleCardHover(offer) {
+    this.setState({
+      activeCard: offer
+    });
+  }
+
+  render() {
+    const {offers, onTitleClick} = this.props;
+    return (
+      <div className="cities__places-list places__list tabs__content">
+        {offers.map((offer) =>
+          <Card
+            offer={offer}
+            key={offer.id}
+            onTitleClick={onTitleClick}
+            onMouseOver={this.handleCardHover}
+          />
+        )}
+      </div>
+    );
+  }
+}
+
 
 CardsList.propTypes = {
-  titles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  offers: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  })),
   onTitleClick: PropTypes.func.isRequired
 };
 
