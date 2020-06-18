@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 
 const titleClickHandler = () => {};
 
-const App = ({quantity, titles}) => {
+const App = ({quantity, offers}) => {
   return (
     <Main
       quantity={quantity}
-      titles={titles}
+      offers={offers}
       onTitleClick={titleClickHandler}
     />
   );
@@ -16,7 +16,7 @@ const App = ({quantity, titles}) => {
 
 App.propTypes = {
   quantity: PropTypes.number.isRequired,
-  titles: PropTypes.arrayOf(PropTypes.string).isRequired
+  offers: PropTypes.array.isRequired
 };
 
 export default App;

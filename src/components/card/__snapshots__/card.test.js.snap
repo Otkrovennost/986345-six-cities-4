@@ -3,7 +3,15 @@
 exports[`Should Card render correctly 1`] = `
 <article
   className="cities__place-card place-card"
+  onMouseOver={[Function]}
 >
+  <div
+    className="place-card__mark visually-hidden"
+  >
+    <span>
+      Premium
+    </span>
+  </div>
   <div
     className="cities__image-wrapper place-card__image-wrapper"
   >
@@ -14,7 +22,7 @@ exports[`Should Card render correctly 1`] = `
         alt="Place image"
         className="place-card__image"
         height="200"
-        src="img/room.jpg"
+        src="img/apartment-01.jpg"
         width="260"
       />
     </a>
@@ -31,7 +39,8 @@ exports[`Should Card render correctly 1`] = `
         <b
           className="place-card__price-value"
         >
-          €80
+          €
+          120
         </b>
         <span
           className="place-card__price-text"
@@ -40,7 +49,7 @@ exports[`Should Card render correctly 1`] = `
         </span>
       </div>
       <button
-        className="place-card__bookmark-button place-card__bookmark-button--active button"
+        className="place-card__bookmark-button button"
         type="button"
       >
         <svg
@@ -49,7 +58,7 @@ exports[`Should Card render correctly 1`] = `
           width="18"
         >
           <use
-            xlinkHref="#icon-bookmark-active"
+            xlinkHref="#icon-bookmark"
           />
         </svg>
         <span
@@ -86,13 +95,13 @@ exports[`Should Card render correctly 1`] = `
       <a
         href="#"
       >
-        One
+        Beautiful & luxurious apartment at great location
       </a>
     </h2>
     <p
       className="place-card__type"
     >
-      Private room
+      Apartment
     </p>
   </div>
 </article>

@@ -3,27 +3,42 @@ import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import Card from "./card.jsx";
 
-const Settings = {
-  name: `One`
+const offer = {
+  id: 1,
+  title: `Beautiful & luxurious apartment at great location`,
+  price: 120,
+  type: `Apartment`,
+  rating: 4,
+  photo: `img/apartment-01.jpg`,
+  isPremium: false
 };
 
 Enzyme.configure({
   adapter: new Adapter()
 });
 
-it(`Should title be pressed`, () => {
-  const onTitleClick = jest.fn();
+describe(`Card`, () => {
+  it(`Should title be pressed and when user hovers the card with onMouseOver the handler should get information about the offer`, () => {
+    const onTitleClick = jest.fn();
+    const onMouseOver = jest.fn();
 
-  const card = shallow(
-      <Card
-        name={Settings.name}
-        onTitleClick={onTitleClick}
-      />
-  );
+    const card = shallow(
+        <Card
+          offer={offer}
+          onTitleClick={onTitleClick}
+          onMouseOver={onMouseOver}
+        />
+    );
 
-  const title = card.find(`h2.place-card__name`);
+    const title = card.find(`h2.place-card__name`);
 
-  title.props().onClick();
+    title.simulate(`click`);
 
-  expect(onTitleClick.mock.calls.length).toBe(1);
+    expect(onTitleClick.mock.calls.length).toBe(1);
+
+    card.find(`.place-card`).simulate(`mouseOver`);
+
+    expect(onMouseOver).toHaveBeenCalledTimes(1);
+    expect(onMouseOver).toHaveBeenCalledWith(offer.id);
+  });
 });
