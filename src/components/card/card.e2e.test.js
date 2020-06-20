@@ -34,7 +34,8 @@ describe(`Card`, () => {
 
     title.simulate(`click`);
 
-    expect(onTitleClick.mock.calls.length).toBe(1);
+    expect(onTitleClick).toHaveBeenCalledTimes(1);
+    expect(onTitleClick).toHaveBeenCalledWith(offer);
 
     card.find(`.place-card`).simulate(`mouseOver`);
 

@@ -41,8 +41,13 @@ const Card = ({offer, onTitleClick, onMouseOver}) => {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 onClick={onTitleClick} className="place-card__name">
-          <a href="#">{title}</a>
+        <h2 className="place-card__name"
+          onClick={() => {
+            onTitleClick(offer);
+          }}>
+          <a href="#">
+            {title}
+          </a>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
