@@ -2,6 +2,7 @@ export const offers = [
   {
     id: 1,
     title: `Beautiful & luxurious apartment at great location`,
+    coords: [52.3909553943508, 4.85309666406198],
     description: ` A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
     price: 120,
     rating: 4.8,
@@ -22,6 +23,7 @@ export const offers = [
   {
     id: 2,
     title: `Wood and stone place`,
+    coords: [52.369553943508, 4.85309666406198],
     description: ` A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
     price: 80,
     rating: 4,
@@ -42,6 +44,7 @@ export const offers = [
   {
     id: 3,
     title: `Canal View Prinsengracht`,
+    coords: [52.3909553943508, 4.929309666406198],
     description: ` A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
     price: 132,
     rating: 4,
@@ -62,6 +65,7 @@ export const offers = [
   {
     id: 4,
     title: `Nice, cozy, warm big bed apartment`,
+    coords: [52.3809553943508, 4.939309666406198],
     description: ` A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
     price: 180,
     rating: 5,
@@ -77,5 +81,5 @@ export const offers = [
       isSuper: false,
       name: `Angelina`
     }
-  },
+  }
 ];

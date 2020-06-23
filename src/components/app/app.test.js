@@ -10,6 +10,7 @@ const offers = [
   {
     id: 1,
     title: `Beautiful & luxurious apartment at great location`,
+    coords: [52.3909553943508, 4.85309666406198],
     description: ` A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
     price: 120,
     rating: 4.8,
@@ -33,7 +34,9 @@ it(`Render App`, () => {
     .create(<App
       quantity={Settings.OFFERS_QUANTITY}
       offers={offers}
-    />)
+    />, {
+      createNodeMock: () => document.createElement(`div`)
+    })
     .toJSON();
 
   expect(tree).toMatchSnapshot();
