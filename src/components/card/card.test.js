@@ -9,7 +9,8 @@ const offer = {
   type: `Apartment`,
   rating: 4,
   photo: `img/apartment-01.jpg`,
-  isPremium: false
+  isPremium: false,
+  bookmark: true
 };
 
 it(`Should Card render correctly`, () => {
@@ -18,6 +19,7 @@ it(`Should Card render correctly`, () => {
       offer={offer}
       onTitleClick={() => {}}
       onMouseOver={() => {}}
+      cardClass={`cities`}
     />)
     .toJSON();
 

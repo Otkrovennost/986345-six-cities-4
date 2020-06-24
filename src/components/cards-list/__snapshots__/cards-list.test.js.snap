@@ -9,7 +9,7 @@ exports[`Should CardsList render correctly 1`] = `
     onMouseOver={[Function]}
   >
     <div
-      className="place-card__mark visually-hidden"
+      className="place-card__mark"
     >
       <span>
         Premium
@@ -80,7 +80,7 @@ exports[`Should CardsList render correctly 1`] = `
           <span
             style={
               Object {
-                "width": "100%",
+                "width": "96%",
               }
             }
           />
@@ -156,7 +156,7 @@ exports[`Should CardsList render correctly 1`] = `
           </span>
         </div>
         <button
-          className="place-card__bookmark-button button"
+          className="place-card__bookmark-button place-card__bookmark-button--active button"
           type="button"
         >
           <svg
