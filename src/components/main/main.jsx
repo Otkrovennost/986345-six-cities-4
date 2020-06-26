@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import CardsList from "../cards-list/cards-list.jsx";
 import Map from "../map/map.jsx";
+import {CardClass} from "../../const.js";
 
 const Main = ({quantity, offers, onTitleClick}) => {
   return (
@@ -86,7 +87,7 @@ const Main = ({quantity, offers, onTitleClick}) => {
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
               </form>
-              <CardsList offers={offers} onTitleClick={onTitleClick}/>
+              <CardsList offers={offers} onTitleClick={onTitleClick} cardClass={CardClass.CITIES}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

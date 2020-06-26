@@ -9,7 +9,7 @@ class App extends PureComponent {
     super(props);
 
     this.state = {
-      activeCard: null
+      activeOffer: null
     };
 
     this._titleClickHandler = this._titleClickHandler.bind(this);

@@ -10,7 +10,8 @@ const offer = {
   type: `Apartment`,
   rating: 4,
   photo: `img/apartment-01.jpg`,
-  isPremium: false
+  isPremium: false,
+  bookmark: true
 };
 
 Enzyme.configure({
@@ -27,6 +28,7 @@ describe(`Card`, () => {
           offer={offer}
           onTitleClick={onTitleClick}
           onMouseOver={onMouseOver}
+          cardClass={`cities`}
         />
     );
 

@@ -20,15 +20,19 @@ class CardsList extends PureComponent {
   }
 
   render() {
-    const {offers, onTitleClick} = this.props;
+    const {offers, onTitleClick, cardClass} = this.props;
+
+    const cardsListName = cardClass === `cities` ? `cities__places-list places__list tabs__content` : `near-places__list places__list`;
+
     return (
-      <div className="cities__places-list places__list tabs__content">
+      <div className={cardsListName}>
         {offers.map((offer) =>
           <Card
             offer={offer}
             key={offer.id}
             onTitleClick={onTitleClick}
             onMouseOver={this.handleCardHover}
+            cardClass={cardClass}
           />
         )}
       </div>
@@ -41,7 +45,8 @@ CardsList.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
   })),
-  onTitleClick: PropTypes.func.isRequired
+  onTitleClick: PropTypes.func,
+  cardClass: PropTypes.string
 };
 
 export default CardsList;
