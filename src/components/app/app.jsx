@@ -4,11 +4,6 @@ import Main from "../main/main.jsx";
 import Offer from "../offer/offer.jsx";
 import PropTypes from "prop-types";
 
-const CardClass = {
-  CITIES: `cities`,
-  NEAR_PLACES: `near-places`
-};
-
 class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -33,7 +28,6 @@ class App extends PureComponent {
       return (
         <Offer
           offer={this.state.activeOffer}
-          cardClass={CardClass.NEAR_PLACES}
         />
       );
     } else {
@@ -41,7 +35,6 @@ class App extends PureComponent {
         <Main
           quantity={quantity}
           offers={offers}
-          cardClass={CardClass.CITIES}
           onTitleClick={this._titleClickHandler}
         />
       );
@@ -60,7 +53,6 @@ class App extends PureComponent {
           <Route exact path="/dev-offer">
             <Offer
               offer={offers[0]}
-              cardClass={CardClass.NEAR_PLACES}
             />
           </Route>
         </Switch>

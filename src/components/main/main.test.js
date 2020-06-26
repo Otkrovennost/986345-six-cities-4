@@ -145,7 +145,6 @@ it(`Should Main render correctly`, () => {
           quantity={Settings.OFFERS_QUANTITY}
           offers={offers}
           onTitleClick={() => {}}
-          cardClass={`cities`}
         />, {
           createNodeMock: () => document.createElement(`div`)
         }

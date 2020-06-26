@@ -47,7 +47,6 @@ it(`Should Offer render correctly`, () => {
   const tree = renderer
     .create(<Offer
       offer={offer}
-      cardClass={`near-places`}
     />, {
       createNodeMock: () => document.createElement(`div`)
     }

@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import CardsList from "../cards-list/cards-list.jsx";
 import Map from "../map/map.jsx";
+import {CardClass} from "../../const.js";
 
-const Main = ({quantity, offers, onTitleClick, cardClass}) => {
+const Main = ({quantity, offers, onTitleClick}) => {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -86,7 +87,7 @@ const Main = ({quantity, offers, onTitleClick, cardClass}) => {
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
               </form>
-              <CardsList offers={offers} onTitleClick={onTitleClick} cardClass={cardClass}/>
+              <CardsList offers={offers} onTitleClick={onTitleClick} cardClass={CardClass.CITIES}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
@@ -105,8 +106,7 @@ const Main = ({quantity, offers, onTitleClick, cardClass}) => {
 Main.propTypes = {
   quantity: PropTypes.number.isRequired,
   offers: PropTypes.array.isRequired,
-  onTitleClick: PropTypes.func.isRequired,
-  cardClass: PropTypes.string
+  onTitleClick: PropTypes.func.isRequired
 };
 
 export default Main;
