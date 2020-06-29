@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import Map from "./map.jsx";
 
-const offers = [
+const currentOffers = [
   {
     coords: [52.3909553943508, 4.85309666406198]
   }, {
@@ -18,7 +18,7 @@ it(`Should Map render correctly`, () => {
   const tree = renderer
     .create(
         <Map
-          offers={offers}
+          currentOffers={currentOffers}
         />, {
           createNodeMock: () => document.createElement(`div`)
         }
