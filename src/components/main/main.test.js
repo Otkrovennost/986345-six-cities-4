@@ -5,6 +5,7 @@ import configureStore from "redux-mock-store";
 import {Main} from "./main.jsx";
 
 const mockStore = configureStore([]);
+
 const CITIES_LIST = [`Amsterdam`, `Paris`, `Cologne`, `Brussels`, `Hamburg`];
 const currentOffers = [
   {
