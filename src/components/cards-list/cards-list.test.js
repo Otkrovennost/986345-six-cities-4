@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import CardsList from "./cards-list.jsx";
 
-const currentOffers = [
+const offers = [
   {
     id: 15,
     city: `Hamburg`,
@@ -203,7 +203,7 @@ const currentOffers = [
 it(`Should CardsList render correctly`, () => {
   const tree = renderer
     .create(<CardsList
-      currentOffers={currentOffers}
+      offers={offers}
       onTitleClick={() => {}}
       cardClass={`cities`}
     />)

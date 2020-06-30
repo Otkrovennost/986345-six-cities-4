@@ -2,10 +2,10 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import Main from "./main.jsx";
+import {Main} from "./main.jsx";
 
 const mockStore = configureStore([]);
-
+const CITIES_LIST = [`Amsterdam`, `Paris`, `Cologne`, `Brussels`, `Hamburg`];
 const currentOffers = [
   {
     id: 15,
@@ -207,7 +207,7 @@ const currentOffers = [
 it(`Should Main render correctly`, () => {
   const store = mockStore({
     currentCity: `Amsterdam`,
-    currentOffers
+    citiesOfferslist: CITIES_LIST
   });
   const tree = renderer
     .create(
@@ -215,6 +215,7 @@ it(`Should Main render correctly`, () => {
           <Main
             currentOffers={currentOffers}
             currentCity={`Amsterdam`}
+            citiesOffersList={CITIES_LIST}
             onTitleClick={() => {}}
           />
         </Provider>, {

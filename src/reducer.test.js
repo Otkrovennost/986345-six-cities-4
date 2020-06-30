@@ -1,5 +1,4 @@
 import {reducer, ActionCreator, ActionType} from "./reducer.js";
-import {getOffersByCity} from "./utils/utils";
 
 const offers = [
   {
@@ -271,31 +270,12 @@ it(`Reducer should change city by a given value`, () => {
   expect(reducer({
     currentCity: `Amsterdam`,
     offers,
-    currentOffers: getOffersByCity(`Amsterdam`, offers),
     citiesOffersList
   }, {
     type: ActionType.CHANGE_CURRENT_CITY,
     payload: `Paris`,
   })).toEqual({
     currentCity: `Paris`,
-    offers,
-    currentOffers: getOffersByCity(`Amsterdam`, offers),
-    citiesOffersList
-  });
-});
-
-it(`Reducer should change current offers by a given city value`, () => {
-  expect(reducer({
-    currentCity: `Amsterdam`,
-    offers,
-    currentOffers: getOffersByCity(`Amsterdam`, offers),
-    citiesOffersList
-  }, {
-    type: ActionType.CHANGE_CURRENT_OFFERS,
-    payload: `Paris`,
-  })).toEqual({
-    currentCity: `Amsterdam`,
-    currentOffers: getOffersByCity(`Paris`, offers),
     offers,
     citiesOffersList
   });
@@ -307,13 +287,5 @@ describe(`Action creators for change current city return correct action`, () => 
       type: ActionType.CHANGE_CURRENT_CITY,
       payload: `Paris`,
     });
-  });
-
-  it(`Action creator for change current offers return correct action`, () => {
-    expect(ActionCreator.changeOffers(`Paris`))
-      .toEqual({
-        type: ActionType.CHANGE_CURRENT_OFFERS,
-        payload: `Paris`,
-      });
   });
 });

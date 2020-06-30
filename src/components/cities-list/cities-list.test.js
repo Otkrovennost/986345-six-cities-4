@@ -5,10 +5,11 @@ import configureStore from "redux-mock-store";
 import {CitiesList} from "./cities-list";
 
 const mockStore = configureStore([]);
+const CITIES_LIST = [`Amsterdam`, `Paris`, `Cologne`, `Brussels`, `Hamburg`];
 
 it(`Should render Cities List correctly`, () => {
   const store = mockStore({
-    currentCity: `Amsterdam`,
+    currentCity: `Amsterdam`
   });
   const tree = renderer
     .create(
@@ -16,6 +17,7 @@ it(`Should render Cities List correctly`, () => {
           <CitiesList
             onCityClick={() => {}}
             currentCity={`Amsterdam`}
+            citiesOffersList={CITIES_LIST}
           />
         </Provider>
     ).toJSON();

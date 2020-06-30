@@ -166,14 +166,14 @@ const Offer = ({offer, onTitleClick}) => {
           </div>
           <section className="property__map map">
             <Map
-              currentOffers={nearOffers}
+              offers={nearOffers}
             />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CardsList currentOffers={nearOffers} onTitleClick={onTitleClick} cardClass={CardClass.NEAR_PLACES}/>
+            <CardsList offers={nearOffers} onTitleClick={onTitleClick} cardClass={CardClass.NEAR_PLACES}/>
           </section>
         </div>
       </main>

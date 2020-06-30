@@ -2,10 +2,11 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import {App} from "./app.jsx";
+import App from "./app.jsx";
 
 const mockStore = configureStore([]);
 
+const CITIES_LIST = [`Amsterdam`, `Paris`, `Cologne`, `Brussels`, `Hamburg`];
 const offers = [
   {
     id: 1,
@@ -143,15 +144,15 @@ const offers = [
 it(`Render App`, () => {
   const store = mockStore({
     currentCity: `Amsterdam`,
-    currentOffers: offers
+    offers,
+    citiesOffersList: CITIES_LIST
   });
+
   const tree = renderer
     .create(
         <Provider store={store}>
           <App
             offers={offers}
-            currentCity={`Amsterdam`}
-            currentOffers={offers}
           />
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)

@@ -1,11 +1,13 @@
 import React from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import CardsList from "../cards-list/cards-list.jsx";
 import Map from "../map/map.jsx";
 import {CardClass} from "../../const.js";
 import CitiesList from "../cities-list/cities-list.jsx";
+import {getOffersByCity} from "../../utils/utils";
 
-const Main = ({onTitleClick, currentCity, currentOffers}) => {
+const Main = ({onTitleClick, currentCity, citiesOffersList, currentOffers}) => {
 
   const mainClass = currentOffers.length > 0 ? `page__main page__main--index` : `page__main page__main--index page__main--index-empty`;
 
@@ -37,7 +39,7 @@ const Main = ({onTitleClick, currentCity, currentOffers}) => {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CitiesList />
+            <CitiesList currentCity={currentCity} citiesOffersList={citiesOffersList} />
           </section>
         </div>
         <div className="cities">
@@ -63,12 +65,12 @@ const Main = ({onTitleClick, currentCity, currentOffers}) => {
                       <li className="places__option" tabIndex="0">Top rated first</li>
                     </ul>
                   </form>
-                  <CardsList currentOffers={currentOffers} onTitleClick={onTitleClick} cardClass={CardClass.CITIES}/>
+                  <CardsList offers={currentOffers} onTitleClick={onTitleClick} cardClass={CardClass.CITIES}/>
                 </section>
                 <div className="cities__right-section">
                   <section className="cities__map map">
                     <Map
-                      currentOffers={currentOffers}
+                      offers={currentOffers}
                     />
                   </section>
                 </div>
@@ -89,10 +91,18 @@ const Main = ({onTitleClick, currentCity, currentOffers}) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  currentCity: state.currentCity,
+  citiesOffersList: state.citiesOffersList,
+  currentOffers: getOffersByCity(state.currentCity, state.offers)
+});
+
 Main.propTypes = {
   onTitleClick: PropTypes.func.isRequired,
-  currentCity: PropTypes.string.isRequired,
-  currentOffers: PropTypes.array.isRequired
+  currentCity: PropTypes.string,
+  currentOffers: PropTypes.array,
+  citiesOffersList: PropTypes.array
 };
 
-export default Main;
+export {Main};
+export default connect(mapStateToProps)(Main);
