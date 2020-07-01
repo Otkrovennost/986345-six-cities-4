@@ -151,9 +151,7 @@ it(`Render App`, () => {
   const tree = renderer
     .create(
         <Provider store={store}>
-          <App
-            offers={offers}
-          />
+          <App/>
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)
         })
