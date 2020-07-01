@@ -2,7 +2,8 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import {Main} from "./main.jsx";
+import {getOffersByCity} from "../../utils/utils";
+import Main from "./main.jsx";
 
 const mockStore = configureStore([]);
 
@@ -338,18 +339,16 @@ const CURRENT_OFFERS = [
 
 it(`Should Main render correctly`, () => {
   const store = mockStore({
+    offers: CURRENT_OFFERS,
     currentCity: `Amsterdam`,
-    citiesOfferslist: CITIES_LIST,
-    currentOffers: CURRENT_OFFERS
+    citiesOffersList: CITIES_LIST,
+    currentOffers: getOffersByCity(`Amsterdam`, CURRENT_OFFERS)
   });
   const tree = renderer
     .create(
         <Provider store={store}>
           <Main
             onTitleClick={() => {}}
-            currentCity={`Amsterdam`}
-            citiesOffersList={CITIES_LIST}
-            currentOffers={CURRENT_OFFERS}
           />
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)
