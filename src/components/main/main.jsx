@@ -104,5 +104,4 @@ Main.propTypes = {
   citiesOffersList: PropTypes.array
 };
 
-// export {Main};
 export default connect(mapStateToProps)(Main);
