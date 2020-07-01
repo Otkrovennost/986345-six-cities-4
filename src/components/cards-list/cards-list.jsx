@@ -40,7 +40,6 @@ class CardsList extends PureComponent {
   }
 }
 
-
 CardsList.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,

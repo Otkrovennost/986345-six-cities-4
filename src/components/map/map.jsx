@@ -5,48 +5,58 @@ import leaflet from "leaflet";
 class Map extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.map = createRef();
+    this._map = null;
+    this.mapRef = createRef();
   }
 
   componentDidMount() {
+    this._setupMap();
+  }
+
+  componentDidUpdate() {
+    this._map.off();
+    this._map.remove();
+    this._setupMap();
+  }
+
+  render() {
+    return (
+      <div id="map" style={{height: `100%`}} ref={this.mapRef}/>
+    );
+  }
+
+  _setupMap() {
     const {offers} = this.props;
-    const city = [52.38333, 4.9];
+    const city = offers[0].coords;
     const icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
       iconSize: [27, 39]
     });
     const zoom = 12;
-    const map = leaflet.map(this.map.current, {
+    this._map = leaflet.map(this.mapRef.current, {
       center: city,
       zoom,
       zoomControl: false,
       marker: true
     });
 
-    map.setView(city, zoom);
+    this._map.setView(city, zoom);
 
     leaflet
     .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
       attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
     })
-    .addTo(map);
+    .addTo(this._map);
+
+    leaflet
+    .marker(city, {icon})
+    .addTo(this._map);
 
     offers.map((offer) => {
       leaflet
         .marker(offer.coords, {icon})
-        .addTo(map);
+        .addTo(this._map);
     });
-  }
-
-  componentWillUnmount() {
-    this.map.current = null;
-  }
-
-  render() {
-    return (
-      <div id="map" style={{height: 100 + `%`}} ref={this.map}></div>
-    );
   }
 }
 

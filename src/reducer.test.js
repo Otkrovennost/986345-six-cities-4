@@ -1,14 +1,6 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import {Provider} from "react-redux";
-import configureStore from "redux-mock-store";
-import {getOffersByCity} from "../../utils/utils";
-import Main from "./main.jsx";
+import {reducer, ActionCreator, ActionType} from "./reducer.js";
 
-const mockStore = configureStore([]);
-
-const CITIES_LIST = [`Amsterdam`, `Paris`, `Cologne`, `Brussels`, `Hamburg`];
-const CURRENT_OFFERS = [
+const offers = [
   {
     id: 1,
     city: `Amsterdam`,
@@ -269,91 +261,31 @@ const CURRENT_OFFERS = [
         bookmark: false
       }
     ]
-  },
-  {
-    id: 5,
-    city: `Paris`,
-    title: `Beautiful & luxurious apartment at great location`,
-    coords: [48.85881733949785, 2.3470419999999894],
-    description: ` A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
-    price: 120,
-    rating: 4.8,
-    type: `Apartment`,
-    photo: `img/apartment-01.jpg`,
-    isPremium: true,
-    bookmark: false,
-    quantityBedrooms: 3,
-    maxAdults: 4,
-    options: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
-    images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
-    host: {
-      avatarUrl: `img/avatar-angelina.jpg`,
-      isSuper: true,
-      name: `Angelina`
-    },
-    reviews: [
-      {
-        avatar: `img/avatar-max.jpg`,
-        name: `Max`,
-        text: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
-        date: `2019-04-24`
-      }
-    ],
-    nearOffers: [
-      {
-        id: 1,
-        title: `Wood and stone place`,
-        coords: [48.88271122426135, 2.3650664445800573],
-        price: 80,
-        rating: 4,
-        type: `Private room`,
-        photo: `img/room.jpg`,
-        isPremium: false,
-        bookmark: true
-      },
-      {
-        id: 2,
-        title: `Canal View Prinsengracht`,
-        coords: [48.84721324391586, 2.3669723377625833],
-        price: 132,
-        rating: 4,
-        type: `Apartment`,
-        photo: `img/apartment-02.jpg`,
-        isPremium: false,
-        bookmark: false
-      },
-      {
-        id: 3,
-        title: `Nice, cozy, warm big bed apartment`,
-        coords: [48.84902592717809, 2.3671439991395298],
-        price: 180,
-        rating: 5,
-        type: `Apartment`,
-        photo: `img/apartment-03.jpg`,
-        isPremium: false,
-        bookmark: false
-      }
-    ]
   }
 ];
 
-it(`Should Main render correctly`, () => {
-  const store = mockStore({
-    offers: CURRENT_OFFERS,
-    currentCity: `Amsterdam`,
-    citiesOffersList: CITIES_LIST,
-    currentOffers: getOffersByCity(`Amsterdam`, CURRENT_OFFERS)
-  });
-  const tree = renderer
-    .create(
-        <Provider store={store}>
-          <Main
-            onTitleClick={() => {}}
-          />
-        </Provider>, {
-          createNodeMock: () => document.createElement(`div`)
-        }
-    ).toJSON();
+const citiesOffersList = [...new Set(offers.map((offer) => offer.city))];
 
-  expect(tree).toMatchSnapshot();
+it(`Reducer should change city by a given value`, () => {
+  expect(reducer({
+    currentCity: `Amsterdam`,
+    offers,
+    citiesOffersList
+  }, {
+    type: ActionType.CHANGE_CURRENT_CITY,
+    payload: `Paris`,
+  })).toEqual({
+    currentCity: `Paris`,
+    offers,
+    citiesOffersList
+  });
+});
+
+describe(`Action creators for change current city return correct action`, () => {
+  it(`Action creator for change city returns correct action`, () => {
+    expect(ActionCreator.changeCity(`Paris`)).toEqual({
+      type: ActionType.CHANGE_CURRENT_CITY,
+      payload: `Paris`,
+    });
+  });
 });

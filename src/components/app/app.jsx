@@ -2,7 +2,6 @@ import React, {PureComponent} from "react";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import Main from "../main/main.jsx";
 import Offer from "../offer/offer.jsx";
-import PropTypes from "prop-types";
 
 class App extends PureComponent {
   constructor(props) {
@@ -22,8 +21,6 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {quantity, offers} = this.props;
-
     if (this.state.activeOffer) {
       return (
         <Offer
@@ -33,8 +30,6 @@ class App extends PureComponent {
     } else {
       return (
         <Main
-          quantity={quantity}
-          offers={offers}
           onTitleClick={this._titleClickHandler}
         />
       );
@@ -42,18 +37,11 @@ class App extends PureComponent {
   }
 
   render() {
-    const {offers} = this.props;
-
     return (
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
             {this._renderApp()}
-          </Route>
-          <Route exact path="/dev-offer">
-            <Offer
-              offer={offers[0]}
-            />
           </Route>
         </Switch>
       </BrowserRouter>
@@ -61,9 +49,5 @@ class App extends PureComponent {
   }
 }
 
-App.propTypes = {
-  quantity: PropTypes.number.isRequired,
-  offers: PropTypes.array.isRequired
-};
-
 export default App;
+
