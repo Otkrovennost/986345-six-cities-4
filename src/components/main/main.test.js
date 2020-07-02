@@ -3,10 +3,10 @@ import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {getOffersByCity} from "../../utils/utils";
+import {getSortedOffers} from "../../reducer";
 import Main from "./main.jsx";
 
 const mockStore = configureStore([]);
-
 const CITIES_LIST = [`Amsterdam`, `Paris`, `Cologne`, `Brussels`, `Hamburg`];
 const CURRENT_OFFERS = [
   {
@@ -340,15 +340,19 @@ const CURRENT_OFFERS = [
 it(`Should Main render correctly`, () => {
   const store = mockStore({
     offers: CURRENT_OFFERS,
+    currentCard: CURRENT_OFFERS[0],
     currentCity: `Amsterdam`,
     citiesOffersList: CITIES_LIST,
-    currentOffers: getOffersByCity(`Amsterdam`, CURRENT_OFFERS)
+    currentSortType: `Popular`,
+    currentOffers: getSortedOffers(getOffersByCity(`Amsterdam`, CURRENT_OFFERS), `Top rated first`),
+    sortListIsOpen: false
   });
   const tree = renderer
     .create(
         <Provider store={store}>
           <Main
             onTitleClick={() => {}}
+            onCardHover={() => {}}
           />
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)

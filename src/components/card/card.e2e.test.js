@@ -21,13 +21,13 @@ Enzyme.configure({
 describe(`Card`, () => {
   it(`Should title be pressed and when user hovers the card with onMouseOver the handler should get information about the offer`, () => {
     const onTitleClick = jest.fn();
-    const onMouseOver = jest.fn();
+    const onCardHover = jest.fn();
 
     const card = shallow(
         <Card
           offer={offer}
           onTitleClick={onTitleClick}
-          onMouseOver={onMouseOver}
+          onCardHover={onCardHover}
           cardClass={`cities`}
         />
     );
@@ -41,7 +41,7 @@ describe(`Card`, () => {
 
     card.find(`.place-card`).simulate(`mouseOver`);
 
-    expect(onMouseOver).toHaveBeenCalledTimes(1);
-    expect(onMouseOver).toHaveBeenCalledWith(offer.id);
+    expect(onCardHover).toHaveBeenCalledTimes(1);
+    expect(onCardHover).toHaveBeenCalledWith(offer);
   });
 });

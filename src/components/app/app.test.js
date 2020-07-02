@@ -145,7 +145,10 @@ it(`Render App`, () => {
   const store = mockStore({
     currentCity: `Amsterdam`,
     offers,
-    citiesOffersList: CITIES_LIST
+    currentCard: offers[0],
+    citiesOffersList: CITIES_LIST,
+    currentSortType: `Popular`,
+    sortListIsOpen: false
   });
 
   const tree = renderer

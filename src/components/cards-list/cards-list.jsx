@@ -1,50 +1,57 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Card from "../card/card.jsx";
 
-class CardsList extends PureComponent {
-  constructor(props) {
-    super(props);
+const CardsList = ({offers, onTitleClick, onCardHover, cardClass}) => {
+  const cardsListName = cardClass === `cities` ? `cities__places-list places__list tabs__content` : `near-places__list places__list`;
 
-    this.state = {
-      activeCard: null
-    };
+  return (
+    <div className={cardsListName}>
+      {offers.map((offer) =>
+        <Card
+          offer={offer}
+          key={offer.id}
+          onTitleClick={onTitleClick}
+          onCardHover={onCardHover}
+          cardClass={cardClass}
+        />
+      )}
+    </div>
+  );
+};
 
-    this.handleCardHover = this.handleCardHover.bind(this);
-  }
+// class CardsList extends PureComponent {
+//   constructor(props) {
+//     super(props);
+//   }
 
-  handleCardHover(offerId) {
-    this.setState({
-      activeCard: offerId
-    });
-  }
+//   render() {
+//     const {offers, onTitleClick, onCardHover, cardClass} = this.props;
 
-  render() {
-    const {offers, onTitleClick, cardClass} = this.props;
+//     const cardsListName = cardClass === `cities` ? `cities__places-list places__list tabs__content` : `near-places__list places__list`;
 
-    const cardsListName = cardClass === `cities` ? `cities__places-list places__list tabs__content` : `near-places__list places__list`;
-
-    return (
-      <div className={cardsListName}>
-        {offers.map((offer) =>
-          <Card
-            offer={offer}
-            key={offer.id}
-            onTitleClick={onTitleClick}
-            onMouseOver={this.handleCardHover}
-            cardClass={cardClass}
-          />
-        )}
-      </div>
-    );
-  }
-}
+//     return (
+//       <div className={cardsListName}>
+//         {offers.map((offer) =>
+//           <Card
+//             offer={offer}
+//             key={offer.id}
+//             onTitleClick={onTitleClick}
+//             onCardHover={onCardHover}
+//             cardClass={cardClass}
+//           />
+//         )}
+//       </div>
+//     );
+//   }
+// }
 
 CardsList.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
   })),
   onTitleClick: PropTypes.func,
+  onCardHover: PropTypes.func,
   cardClass: PropTypes.string
 };
 

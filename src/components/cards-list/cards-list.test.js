@@ -205,6 +205,7 @@ it(`Should CardsList render correctly`, () => {
     .create(<CardsList
       offers={offers}
       onTitleClick={() => {}}
+      onCardHover={() => {}}
       cardClass={`cities`}
     />)
     .toJSON();
