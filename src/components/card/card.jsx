@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Card = ({offer, onTitleClick, onMouseOver, cardClass}) => {
+const Card = ({offer, onTitleClick, onCardHover, cardClass}) => {
   const {id, title, price, type, rating, photo, isPremium, bookmark} = offer;
 
   const cardClassName = cardClass === `cities` ? `cities__place-card place-card` : `near-places__card place-card`;
@@ -15,7 +15,7 @@ const Card = ({offer, onTitleClick, onMouseOver, cardClass}) => {
     <article className={cardClassName}
       key={id}
       onMouseOver={() => {
-        onMouseOver(id);
+        onCardHover(offer);
       }}
     >
       <div className={premiumClass}>
@@ -71,7 +71,7 @@ Card.propTypes = {
     bookmark: PropTypes.bool.isRequired
   }),
   onTitleClick: PropTypes.func,
-  onMouseOver: PropTypes.func.isRequired,
+  onCardHover: PropTypes.func.isRequired,
   cardClass: PropTypes.string
 };
 

@@ -6,3 +6,4 @@ export const getOffersByCity = (city, offers) => {
   const offersByCity = offers.filter((offer) => offer.city === city);
   return offersByCity;
 };
+

@@ -270,22 +270,82 @@ it(`Reducer should change city by a given value`, () => {
   expect(reducer({
     currentCity: `Amsterdam`,
     offers,
-    citiesOffersList
+    currentCard: {},
+    citiesOffersList,
+    sortListIsOpen: false,
+    currentSortType: `Popular`,
   }, {
     type: ActionType.CHANGE_CURRENT_CITY,
     payload: `Paris`,
   })).toEqual({
     currentCity: `Paris`,
     offers,
-    citiesOffersList
+    currentCard: {},
+    citiesOffersList,
+    sortListIsOpen: false,
+    currentSortType: `Popular`,
   });
 });
 
-describe(`Action creators for change current city return correct action`, () => {
+it(`Reducer should change sorting by a given value`, () => {
+  expect(reducer({
+    currentCity: `Amsterdam`,
+    offers,
+    currentCard: {},
+    citiesOffersList,
+    sortListIsOpen: false,
+    currentSortType: `Popular`
+  }, {
+    type: ActionType.CHANGE_SORT,
+    payload: `Top rated first`,
+  })).toEqual({
+    currentCity: `Amsterdam`,
+    offers,
+    currentCard: {},
+    citiesOffersList,
+    sortListIsOpen: false,
+    currentSortType: `Top rated first`
+  });
+});
+
+it(`Reducer should return card by a given value`, () => {
+  expect(reducer({
+    currentCity: `Amsterdam`,
+    offers,
+    currentCard: {},
+    citiesOffersList,
+    sortListIsOpen: false,
+    currentSortType: `Popular`
+  }, {
+    type: ActionType.CARD_HOVER,
+    payload: offers[0],
+  })).toEqual({
+    currentCity: `Amsterdam`,
+    offers,
+    currentCard: offers[0],
+    citiesOffersList,
+    sortListIsOpen: false,
+    currentSortType: `Popular`
+  });
+});
+
+describe(`Action creators for change return correct action`, () => {
   it(`Action creator for change city returns correct action`, () => {
     expect(ActionCreator.changeCity(`Paris`)).toEqual({
       type: ActionType.CHANGE_CURRENT_CITY,
       payload: `Paris`,
+    });
+  });
+  it(`Action creator for change sorting return correct action`, () => {
+    expect(ActionCreator.changeSortType(`Top rated first`)).toEqual({
+      type: ActionType.CHANGE_SORT,
+      payload: `Top rated first`,
+    });
+  });
+  it(`Action creator for card hover return correct action`, () => {
+    expect(ActionCreator.hoverCurrentCard(offers[0])).toEqual({
+      type: ActionType.CARD_HOVER,
+      payload: offers[0],
     });
   });
 });

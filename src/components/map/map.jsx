@@ -1,4 +1,5 @@
 import React, {PureComponent, createRef} from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import leaflet from "leaflet";
 
@@ -6,6 +7,7 @@ class Map extends PureComponent {
   constructor(props) {
     super(props);
     this._map = null;
+    this._layer = null;
     this.mapRef = createRef();
   }
 
@@ -26,10 +28,14 @@ class Map extends PureComponent {
   }
 
   _setupMap() {
-    const {offers} = this.props;
+    const {offers, currentCard} = this.props;
     const city = offers[0].coords;
     const icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
+      iconSize: [27, 39]
+    });
+    const iconActive = leaflet.icon({
+      iconUrl: `img/pin-active.svg`,
       iconSize: [27, 39]
     });
     const zoom = 12;
@@ -40,7 +46,7 @@ class Map extends PureComponent {
       marker: true
     });
 
-    this._map.setView(city, zoom);
+    this._layer = leaflet.layerGroup().addTo(this._map);
 
     leaflet
     .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
@@ -48,20 +54,29 @@ class Map extends PureComponent {
     })
     .addTo(this._map);
 
-    leaflet
-    .marker(city, {icon})
-    .addTo(this._map);
+    this._map.setView(city, zoom);
 
     offers.map((offer) => {
-      leaflet
+      if (offer.id === currentCard.id) {
+        leaflet
+        .marker(currentCard.coords, {icon: iconActive})
+        .addTo(this._layer);
+      } else {
+        leaflet
         .marker(offer.coords, {icon})
-        .addTo(this._map);
+        .addTo(this._layer);
+      }
     });
   }
 }
 
+const mapStateToProps = (state) => ({
+  currentCard: state.currentCard
+});
+
 Map.propTypes = {
-  offers: PropTypes.array
+  offers: PropTypes.array,
+  currentCard: PropTypes.object
 };
 
-export default Map;
+export default connect(mapStateToProps)(Map);
