@@ -80,8 +80,6 @@ it(`Should Offer render correctly`, () => {
         <Provider store={store}>
           <Offer
             offer={OFFER}
-            onTitleClick={() => {}}
-            onCardHover={() => {}}
           />
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)

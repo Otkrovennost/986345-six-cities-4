@@ -5,11 +5,11 @@ import CardsList from "../cards-list/cards-list.jsx";
 import Map from "../map/map.jsx";
 import {CardClass} from "../../const.js";
 import CitiesList from "../cities-list/cities-list.jsx";
-import {getSortedOffers, ActionCreator} from "../../reducer";
-import {getOffersByCity} from "../../utils/utils";
+import {getSortedOffers, getOffersByCity} from "../../utils/utils";
 import Sorting from "../sorting/sorting.jsx";
+import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
 
-const Main = ({onTitleClick, onCardHover, currentCity, citiesOffersList, currentOffers}) => {
+const Main = ({onTitleClick, currentCity, citiesOffersList, currentOffers, currentItem, onItemMouseOver, onItemMouseOut}) => {
   const mainClass = currentOffers.length > 0 ? `page__main page__main--index` : `page__main page__main--index page__main--index-empty`;
 
   return (
@@ -52,12 +52,13 @@ const Main = ({onTitleClick, onCardHover, currentCity, citiesOffersList, current
                   <h2 className="visually-hidden">Places</h2>
                   <b className="places__found">{currentOffers.length} places to stay in {currentCity}</b>
                   <Sorting/>
-                  <CardsList offers={currentOffers} onTitleClick={onTitleClick} onCardHover={onCardHover} cardClass={CardClass.CITIES}/>
+                  <CardsList offers={currentOffers} onTitleClick={onTitleClick} onItemMouseOver={onItemMouseOver} onItemMouseOut={onItemMouseOut} cardClass={CardClass.CITIES}/>
                 </section>
                 <div className="cities__right-section">
                   <section className="cities__map map">
                     <Map
                       offers={currentOffers}
+                      currentItem={currentItem}
                     />
                   </section>
                 </div>
@@ -79,23 +80,18 @@ const Main = ({onTitleClick, onCardHover, currentCity, citiesOffersList, current
 };
 
 const mapStateToProps = (state) => ({
-  currentCity: state.currentCity,
   citiesOffersList: state.citiesOffersList,
   currentOffers: getSortedOffers(getOffersByCity(state.currentCity, state.offers), state.currentSortType)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onCardHover(card) {
-    dispatch(ActionCreator.hoverCurrentCard(card));
-  },
-});
-
 Main.propTypes = {
-  onTitleClick: PropTypes.func.isRequired,
-  onCardHover: PropTypes.func.isRequired,
   currentCity: PropTypes.string,
+  onTitleClick: PropTypes.func.isRequired,
+  currentItem: PropTypes.object.isRequired,
+  onItemMouseOver: PropTypes.func.isRequired,
+  onItemMouseOut: PropTypes.func.isRequired,
   currentOffers: PropTypes.array,
   citiesOffersList: PropTypes.array
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps)(withActiveItem(Main));

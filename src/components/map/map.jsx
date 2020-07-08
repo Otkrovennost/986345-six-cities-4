@@ -1,5 +1,4 @@
 import React, {PureComponent, createRef} from "react";
-import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import leaflet from "leaflet";
 
@@ -21,7 +20,7 @@ class Map extends PureComponent {
   }
 
   componentDidMount() {
-    const {offers, currentCard} = this.props;
+    const {offers, currentItem} = this.props;
     const city = offers[0].coords;
 
     const zoom = 12;
@@ -43,7 +42,7 @@ class Map extends PureComponent {
     this._map.setView(city, zoom);
 
     offers.map((offer) => {
-      if (offer.id === currentCard.id) {
+      if (currentItem && offer.id === currentItem.id) {
         leaflet
         .marker(offer.coords, {icon: iconActive})
         .addTo(this._layer);
@@ -56,12 +55,12 @@ class Map extends PureComponent {
   }
 
   componentDidUpdate() {
-    const {offers, currentCard} = this.props;
+    const {offers, currentItem} = this.props;
     const zoom = 12;
     this._layer.clearLayers();
 
     offers.map((offer) => {
-      if (offer.id === currentCard.id) {
+      if (currentItem && offer.id === currentItem.id) {
         leaflet
         .marker(offer.coords, {icon: iconActive})
         .addTo(this._layer);
@@ -86,13 +85,9 @@ class Map extends PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({
-  currentCard: state.currentCard
-});
-
 Map.propTypes = {
   offers: PropTypes.array,
-  currentCard: PropTypes.object
+  currentItem: PropTypes.object
 };
 
-export default connect(mapStateToProps)(Map);
+export default Map;

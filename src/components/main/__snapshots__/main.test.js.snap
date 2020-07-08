@@ -160,7 +160,6 @@ exports[`Should Main render correctly 1`] = `
           >
             4
              places to stay in 
-            Amsterdam
           </b>
           <form
             action="#"
@@ -230,6 +229,7 @@ exports[`Should Main render correctly 1`] = `
           >
             <article
               className="cities__place-card place-card"
+              onMouseOut={[Function]}
               onMouseOver={[Function]}
             >
               <div
@@ -334,6 +334,7 @@ exports[`Should Main render correctly 1`] = `
             </article>
             <article
               className="cities__place-card place-card"
+              onMouseOut={[Function]}
               onMouseOver={[Function]}
             >
               <div
@@ -438,6 +439,7 @@ exports[`Should Main render correctly 1`] = `
             </article>
             <article
               className="cities__place-card place-card"
+              onMouseOut={[Function]}
               onMouseOver={[Function]}
             >
               <div
@@ -542,6 +544,7 @@ exports[`Should Main render correctly 1`] = `
             </article>
             <article
               className="cities__place-card place-card"
+              onMouseOut={[Function]}
               onMouseOver={[Function]}
             >
               <div

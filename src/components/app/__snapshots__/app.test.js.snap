@@ -160,7 +160,6 @@ exports[`Render App 1`] = `
           >
             2
              places to stay in 
-            Amsterdam
           </b>
           <form
             action="#"
@@ -230,6 +229,7 @@ exports[`Render App 1`] = `
           >
             <article
               className="cities__place-card place-card"
+              onMouseOut={[Function]}
               onMouseOver={[Function]}
             >
               <div
@@ -334,6 +334,7 @@ exports[`Render App 1`] = `
             </article>
             <article
               className="cities__place-card place-card"
+              onMouseOut={[Function]}
               onMouseOver={[Function]}
             >
               <div

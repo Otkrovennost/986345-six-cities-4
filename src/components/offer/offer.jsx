@@ -5,7 +5,7 @@ import Map from "../map/map.jsx";
 import CardsList from "../cards-list/cards-list.jsx";
 import {CardClass} from "../../const.js";
 
-const Offer = ({offer, onTitleClick, onCardHover}) => {
+const Offer = ({offer}) => {
   const {title, description, price, rating, type, isPremium, quantityBedrooms, maxAdults, options, images, host, reviews, nearOffers} = offer;
 
   const ratingPercentage = `${rating * 20}%`;
@@ -173,7 +173,7 @@ const Offer = ({offer, onTitleClick, onCardHover}) => {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CardsList offers={nearOffers} onTitleClick={onTitleClick} onCardHover={onCardHover} cardClass={CardClass.NEAR_PLACES}/>
+            <CardsList offers={nearOffers} cardClass={CardClass.NEAR_PLACES}/>
           </section>
         </div>
       </main>
@@ -200,9 +200,7 @@ Offer.propTypes = {
     }),
     reviews: PropTypes.array.isRequired,
     nearOffers: PropTypes.array.isRequired
-  }),
-  onTitleClick: PropTypes.func,
-  onCardHover: PropTypes.func
+  })
 };
 
 export default Offer;

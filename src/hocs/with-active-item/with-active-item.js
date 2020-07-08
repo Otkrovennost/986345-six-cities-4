@@ -7,16 +7,23 @@ const withActiveItem = (Component) => {
       super(props);
 
       this.state = {
-        currentItem: null
+        currentItem: {}
       };
 
-      this._itemClickHandler = this._itemClickHandler.bind(this);
+      this._itemOnMouseOver = this._itemOnMouseOver.bind(this);
+      this._itemOnMouseOut = this._itemOnMouseOut.bind(this);
     }
 
 
-    _itemClickHandler(item) {
+    _itemOnMouseOver(item) {
       this.setState({
         currentItem: item
+      });
+    }
+
+    _itemOnMouseOut() {
+      this.setState({
+        currentItem: {}
       });
     }
 
@@ -24,14 +31,18 @@ const withActiveItem = (Component) => {
       return (
         <Component
           {...this.props}
-          onItemClick={this._itemClickHandler}
+          currentItem={this.state.currentItem}
+          onItemMouseOver={this._itemOnMouseOver}
+          onItemMouseOut={this._itemOnMouseOut}
         />
       );
     }
   }
 
   withActiveItem.propTypes = {
-    onItemClick: PropTypes.func.isRequired
+    currentItem: PropTypes.object.isRequired,
+    onItemMouseOver: PropTypes.func.isRequired,
+    onItemMouseOut: PropTypes.func.isRequired
   };
 
   return WithActiveItem;
