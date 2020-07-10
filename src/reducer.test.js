@@ -270,7 +270,6 @@ it(`Reducer should change city by a given value`, () => {
   expect(reducer({
     currentCity: `Amsterdam`,
     offers,
-    currentCard: {},
     citiesOffersList,
     sortListIsOpen: false,
     currentSortType: `Popular`,
@@ -280,7 +279,6 @@ it(`Reducer should change city by a given value`, () => {
   })).toEqual({
     currentCity: `Paris`,
     offers,
-    currentCard: {},
     citiesOffersList,
     sortListIsOpen: false,
     currentSortType: `Popular`,
@@ -291,7 +289,6 @@ it(`Reducer should change sorting by a given value`, () => {
   expect(reducer({
     currentCity: `Amsterdam`,
     offers,
-    currentCard: {},
     citiesOffersList,
     sortListIsOpen: false,
     currentSortType: `Popular`
@@ -301,31 +298,9 @@ it(`Reducer should change sorting by a given value`, () => {
   })).toEqual({
     currentCity: `Amsterdam`,
     offers,
-    currentCard: {},
     citiesOffersList,
     sortListIsOpen: false,
     currentSortType: `Top rated first`
-  });
-});
-
-it(`Reducer should return card by a given value`, () => {
-  expect(reducer({
-    currentCity: `Amsterdam`,
-    offers,
-    currentCard: {},
-    citiesOffersList,
-    sortListIsOpen: false,
-    currentSortType: `Popular`
-  }, {
-    type: ActionType.CARD_HOVER,
-    payload: offers[0],
-  })).toEqual({
-    currentCity: `Amsterdam`,
-    offers,
-    currentCard: offers[0],
-    citiesOffersList,
-    sortListIsOpen: false,
-    currentSortType: `Popular`
   });
 });
 
@@ -340,12 +315,6 @@ describe(`Action creators for change return correct action`, () => {
     expect(ActionCreator.changeSortType(`Top rated first`)).toEqual({
       type: ActionType.CHANGE_SORT,
       payload: `Top rated first`,
-    });
-  });
-  it(`Action creator for card hover return correct action`, () => {
-    expect(ActionCreator.hoverCurrentCard(offers[0])).toEqual({
-      type: ActionType.CARD_HOVER,
-      payload: offers[0],
     });
   });
 });

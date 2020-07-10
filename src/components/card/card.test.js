@@ -18,7 +18,8 @@ it(`Should Card render correctly`, () => {
     .create(<Card
       offer={offer}
       onTitleClick={() => {}}
-      onCardHover={() => {}}
+      onItemMouseOver={() => {}}
+      onItemMouseOut={() => {}}
       cardClass={`cities`}
     />)
     .toJSON();

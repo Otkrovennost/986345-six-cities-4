@@ -145,7 +145,6 @@ it(`Render App`, () => {
   const store = mockStore({
     currentCity: `Amsterdam`,
     offers,
-    currentCard: offers[0],
     citiesOffersList: CITIES_LIST,
     currentSortType: `Popular`,
     sortListIsOpen: false

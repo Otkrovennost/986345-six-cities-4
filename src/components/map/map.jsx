@@ -1,7 +1,15 @@
 import React, {PureComponent, createRef} from "react";
-import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import leaflet from "leaflet";
+
+const icon = leaflet.icon({
+  iconUrl: `img/pin.svg`,
+  iconSize: [27, 39]
+});
+const iconActive = leaflet.icon({
+  iconUrl: `img/pin-active.svg`,
+  iconSize: [27, 39]
+});
 
 class Map extends PureComponent {
   constructor(props) {
@@ -12,32 +20,9 @@ class Map extends PureComponent {
   }
 
   componentDidMount() {
-    this._setupMap();
-  }
-
-  componentDidUpdate() {
-    this._map.off();
-    this._map.remove();
-    this._setupMap();
-  }
-
-  render() {
-    return (
-      <div id="map" style={{height: `100%`}} ref={this.mapRef}/>
-    );
-  }
-
-  _setupMap() {
-    const {offers, currentCard} = this.props;
+    const {offers, currentItem} = this.props;
     const city = offers[0].coords;
-    const icon = leaflet.icon({
-      iconUrl: `img/pin.svg`,
-      iconSize: [27, 39]
-    });
-    const iconActive = leaflet.icon({
-      iconUrl: `img/pin-active.svg`,
-      iconSize: [27, 39]
-    });
+
     const zoom = 12;
     this._map = leaflet.map(this.mapRef.current, {
       center: city,
@@ -57,9 +42,9 @@ class Map extends PureComponent {
     this._map.setView(city, zoom);
 
     offers.map((offer) => {
-      if (offer.id === currentCard.id) {
+      if (currentItem && offer.id === currentItem.id) {
         leaflet
-        .marker(currentCard.coords, {icon: iconActive})
+        .marker(offer.coords, {icon: iconActive})
         .addTo(this._layer);
       } else {
         leaflet
@@ -68,15 +53,41 @@ class Map extends PureComponent {
       }
     });
   }
-}
 
-const mapStateToProps = (state) => ({
-  currentCard: state.currentCard
-});
+  componentDidUpdate() {
+    const {offers, currentItem} = this.props;
+    const zoom = 12;
+    this._layer.clearLayers();
+
+    offers.map((offer) => {
+      if (currentItem && offer.id === currentItem.id) {
+        leaflet
+        .marker(offer.coords, {icon: iconActive})
+        .addTo(this._layer);
+      } else {
+        leaflet
+        .marker(offer.coords, {icon})
+        .addTo(this._layer);
+      }
+    });
+
+    this._map.setView(offers[0].coords, zoom);
+  }
+
+  componentWillUnmount() {
+    this.mapRef.current = null;
+  }
+
+  render() {
+    return (
+      <div id="map" style={{height: `100%`}} ref={this.mapRef}/>
+    );
+  }
+}
 
 Map.propTypes = {
   offers: PropTypes.array,
-  currentCard: PropTypes.object
+  currentItem: PropTypes.object
 };
 
-export default connect(mapStateToProps)(Map);
+export default Map;

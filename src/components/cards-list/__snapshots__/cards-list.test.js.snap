@@ -6,6 +6,7 @@ exports[`Should CardsList render correctly 1`] = `
 >
   <article
     className="cities__place-card place-card"
+    onMouseOut={[Function]}
     onMouseOver={[Function]}
   >
     <div
@@ -110,6 +111,7 @@ exports[`Should CardsList render correctly 1`] = `
   </article>
   <article
     className="cities__place-card place-card"
+    onMouseOut={[Function]}
     onMouseOver={[Function]}
   >
     <div
@@ -214,6 +216,7 @@ exports[`Should CardsList render correctly 1`] = `
   </article>
   <article
     className="cities__place-card place-card"
+    onMouseOut={[Function]}
     onMouseOver={[Function]}
   >
     <div

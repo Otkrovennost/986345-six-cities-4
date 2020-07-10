@@ -2,8 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import {getOffersByCity} from "../../utils/utils";
-import {getSortedOffers} from "../../reducer";
+import {getOffersByCity, getSortedOffers} from "../../utils/utils";
 import Main from "./main.jsx";
 
 const mockStore = configureStore([]);
@@ -340,7 +339,6 @@ const CURRENT_OFFERS = [
 it(`Should Main render correctly`, () => {
   const store = mockStore({
     offers: CURRENT_OFFERS,
-    currentCard: CURRENT_OFFERS[0],
     currentCity: `Amsterdam`,
     citiesOffersList: CITIES_LIST,
     currentSortType: `Popular`,
@@ -352,7 +350,8 @@ it(`Should Main render correctly`, () => {
         <Provider store={store}>
           <Main
             onTitleClick={() => {}}
-            onCardHover={() => {}}
+            onItemMouseOver={() => {}}
+            onItemMouseOut={() => {}}
           />
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)

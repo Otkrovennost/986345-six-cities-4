@@ -25,7 +25,10 @@ it(`Should Map render correctly`, () => {
   const tree = renderer
     .create(
         <Provider store={store}>
-          <Map offers={CURRENT_OFFERS}/>
+          <Map
+            offers={CURRENT_OFFERS}
+            currentItem={CURRENT_OFFERS[0]}
+          />
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)
         }

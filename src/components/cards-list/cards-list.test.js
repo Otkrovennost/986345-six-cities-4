@@ -204,7 +204,8 @@ it(`Should CardsList render correctly`, () => {
   const tree = renderer
     .create(<CardsList
       offers={offers}
-      onTitleClick={() => {}}
+      onItemMouseOver={() => {}}
+      onItemMouseOut={() => {}}
       onCardHover={() => {}}
       cardClass={`cities`}
     />)
