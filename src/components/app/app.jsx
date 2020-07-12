@@ -1,36 +1,28 @@
 import React, {PureComponent} from "react";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import Main from "../main/main.jsx";
 import Offer from "../offer/offer.jsx";
+import {Operation as DataOperation, ActionCreator} from "../../reducer/data/data.js";
+import {getActiveOffer} from "../../reducer/data/selectors.js";
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      activeOffer: null
-    };
-
-    this._titleClickHandler = this._titleClickHandler.bind(this);
-  }
-
-  _titleClickHandler(offer) {
-    this.setState({
-      activeOffer: offer
-    });
   }
 
   _renderApp() {
-    if (this.state.activeOffer) {
+    if (this.props.activeOffer) {
       return (
         <Offer
-          offer={this.state.activeOffer}
+          offer={this.props.activeOffer}
         />
       );
     } else {
       return (
         <Main
-          onTitleClick={this._titleClickHandler}
+          onTitleClick={this.props.onTitleClick}
         />
       );
     }
@@ -48,5 +40,21 @@ class App extends PureComponent {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  activeOffer: getActiveOffer(state),
+});
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  onTitleClick(offer) {
+    dispatch(ActionCreator.changeOffer(offer));
+    dispatch(DataOperation.loadNearbyOffers(offer.id));
+    dispatch(DataOperation.loadReviews(offer.id));
+  }
+});
+
+App.propTypes = {
+  activeOffer: PropTypes.object,
+  onTitleClick: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

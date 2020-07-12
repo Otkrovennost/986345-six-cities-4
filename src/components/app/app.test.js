@@ -2,6 +2,8 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+import NameSpace from "../../reducer/name-space.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
 import App from "./app.jsx";
 
 const mockStore = configureStore([]);
@@ -27,51 +29,9 @@ const offers = [
     host: {
       avatarUrl: `img/avatar-angelina.jpg`,
       isSuper: true,
-      name: `Angelina`
-    },
-    reviews: [
-      {
-        avatar: `img/avatar-max.jpg`,
-        name: `Max`,
-        text: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
-        date: `2019-04-24`
-      }
-    ],
-    nearOffers: [
-      {
-        id: 1,
-        title: `Wood and stone place`,
-        coords: [52.369553943508, 4.85309666406198],
-        price: 80,
-        rating: 4,
-        type: `Private room`,
-        photo: `img/room.jpg`,
-        isPremium: false,
-        bookmark: true
-      },
-      {
-        id: 2,
-        title: `Canal View Prinsengracht`,
-        coords: [52.3909553943508, 4.929309666406198],
-        price: 132,
-        rating: 4,
-        type: `Apartment`,
-        photo: `img/apartment-02.jpg`,
-        isPremium: false,
-        bookmark: false
-      },
-      {
-        id: 3,
-        title: `Nice, cozy, warm big bed apartment`,
-        coords: [52.3809553943508, 4.939309666406198],
-        price: 180,
-        rating: 5,
-        type: `Apartment`,
-        photo: `img/apartment-03.jpg`,
-        isPremium: false,
-        bookmark: false
-      }
-    ]
+      name: `Angelina`,
+      id: 1
+    }
   },
 
   {
@@ -93,61 +53,53 @@ const offers = [
     host: {
       avatarUrl: `img/avatar-angelina.jpg`,
       isSuper: true,
-      name: `Angelina`
-    },
-    reviews: [
-      {
-        avatar: `img/avatar-max.jpg`,
-        name: `Max`,
-        text: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
-        date: `2019-04-24`
-      }
-    ],
-    nearOffers: [
-      {
-        id: 1,
-        title: `Wood and stone place`,
-        coords: [52.3909553943508, 4.85309666406198],
-        price: 80,
-        rating: 4,
-        type: `Private room`,
-        photo: `img/room.jpg`,
-        isPremium: false,
-        bookmark: false
-      },
-      {
-        id: 2,
-        title: `Canal View Prinsengracht`,
-        coords: [52.3909553943508, 4.929309666406198],
-        price: 132,
-        rating: 4,
-        type: `Apartment`,
-        photo: `img/apartment-02.jpg`,
-        isPremium: false,
-        bookmark: false
-      },
-      {
-        id: 3,
-        title: `Nice, cozy, warm big bed apartment`,
-        coords: [52.3809553943508, 4.939309666406198],
-        price: 180,
-        rating: 5,
-        type: `Apartment`,
-        photo: `img/apartment-03.jpg`,
-        isPremium: false,
-        bookmark: false
-      }
-    ]
+      name: `Angelina`,
+      id: 1
+    }
+  },
+  {
+    id: 3,
+    city: `Amsterdam`,
+    title: `Canal View Prinsengracht`,
+    coords: [52.3909553943508, 4.929309666406198],
+    description: ` A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
+    price: 132,
+    rating: 4,
+    type: `Apartment`,
+    photo: `img/apartment-02.jpg`,
+    isPremium: false,
+    bookmark: false,
+    quantityBedrooms: 3,
+    maxAdults: 5,
+    options: [`Wi-Fi`, `Towels`, `Heating`, `Coffee machine`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
+    images: [`img/room.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
+    host: {
+      avatarUrl: `img/avatar-angelina.jpg`,
+      isSuper: true,
+      name: `Angelina`,
+      id: 1
+    }
   }
 ];
 
 it(`Render App`, () => {
   const store = mockStore({
-    currentCity: `Amsterdam`,
-    offers,
-    citiesOffersList: CITIES_LIST,
-    currentSortType: `Popular`,
-    sortListIsOpen: false
+    [NameSpace.DATA]: {
+      offers,
+      nearbyOffers: [],
+      isNearbyOffersLoading: true,
+      activeOffer: offers[0],
+      reviews: [],
+      isReviewsLoading: true,
+      currentCity: `Amsterdam`,
+      citiesOffersList: CITIES_LIST,
+      sortListIsOpen: false,
+      currentSortType: `Popular`
+    },
+    [NameSpace.USER]: {
+      authorizationStatus: AuthorizationStatus.AUTH,
+      email: `el@mail.ru`
+    }
   });
 
   const tree = renderer

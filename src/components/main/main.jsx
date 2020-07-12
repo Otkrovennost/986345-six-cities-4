@@ -8,6 +8,7 @@ import CitiesList from "../cities-list/cities-list.jsx";
 import {getSortedOffers, getOffersByCity} from "../../utils/utils";
 import Sorting from "../sorting/sorting.jsx";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
+import {getCurrentCity, getCitiesOffersList, getOffers, getCurrentSortType} from "../../reducer/data/selectors.js";
 
 const Main = ({onTitleClick, currentCity, citiesOffersList, currentOffers, currentItem, onItemMouseOver, onItemMouseOut}) => {
   const mainClass = currentOffers.length > 0 ? `page__main page__main--index` : `page__main page__main--index page__main--index-empty`;
@@ -80,8 +81,8 @@ const Main = ({onTitleClick, currentCity, citiesOffersList, currentOffers, curre
 };
 
 const mapStateToProps = (state) => ({
-  citiesOffersList: state.citiesOffersList,
-  currentOffers: getSortedOffers(getOffersByCity(state.currentCity, state.offers), state.currentSortType)
+  citiesOffersList: getCitiesOffersList(state),
+  currentOffers: getSortedOffers(getOffersByCity(getCurrentCity(state), getOffers(state)), getCurrentSortType(state))
 });
 
 Main.propTypes = {

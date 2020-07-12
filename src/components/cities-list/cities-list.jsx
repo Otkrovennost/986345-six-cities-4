@@ -1,7 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {ActionCreator} from "../../reducer";
+import {ActionCreator} from "../../reducer/data/data";
+import {getCurrentCity} from "../../reducer/data/selectors.js";
 
 const CitiesList = ({currentCity, citiesOffersList, onCityClick}) => {
   const listOfCities = citiesOffersList.map((city) =>
@@ -20,7 +21,7 @@ const CitiesList = ({currentCity, citiesOffersList, onCityClick}) => {
 };
 
 const mapStateToProps = (state) => ({
-  currentCity: state.currentCity,
+  currentCity: getCurrentCity(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
