@@ -46,9 +46,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onTitleClick(offer) {
-    dispatch(ActionCreator.changeOffer(offer));
-    dispatch(DataOperation.loadNearbyOffers(offer.id));
-    dispatch(DataOperation.loadReviews(offer.id));
+    dispatch(DataOperation.loadNearbyOffers(offer.id))
+      .then(() => dispatch(DataOperation.loadReviews(offer.id)))
+      .then(() => dispatch(ActionCreator.changeOffer(offer)));
   }
 });
 

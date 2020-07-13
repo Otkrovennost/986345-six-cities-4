@@ -16,16 +16,8 @@ export const getNearbyOffers = (state) => {
   return state[NameSpace.DATA].nearbyOffers;
 };
 
-export const getNearbyOffersStatus = (state) => {
-  return state[NameSpace.DATA].isNearbyOffersLoading;
-};
-
 export const getReviews = (state) => {
   return state[NameSpace.DATA].reviews;
-};
-
-export const getReviewsStatus = (state) => {
-  return state[NameSpace.DATA].isReviewsLoading;
 };
 
 export const getCurrentSortType = (state) => {

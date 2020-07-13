@@ -122,10 +122,7 @@ it(`Should Offer render correctly`, () => {
   const store = mockStore({
     [NameSpace.DATA]: {
       nearbyOffers: NEARBY_OFFERS,
-      isNearbyOffersLoading: false,
-      activeOffer: OFFER,
-      reviews: REVIEWS,
-      isReviewsLoading: false,
+      reviews: REVIEWS
     }
   });
 

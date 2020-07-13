@@ -9,7 +9,7 @@ import App from "./app.jsx";
 const mockStore = configureStore([]);
 
 const CITIES_LIST = [`Amsterdam`, `Paris`, `Cologne`, `Brussels`, `Hamburg`];
-const offers = [
+const OFFERS = [
   {
     id: 1,
     city: `Amsterdam`,
@@ -85,12 +85,10 @@ const offers = [
 it(`Render App`, () => {
   const store = mockStore({
     [NameSpace.DATA]: {
-      offers,
+      offers: OFFERS,
       nearbyOffers: [],
-      isNearbyOffersLoading: true,
-      activeOffer: offers[0],
+      activeOffer: null,
       reviews: [],
-      isReviewsLoading: true,
       currentCity: `Amsterdam`,
       citiesOffersList: CITIES_LIST,
       sortListIsOpen: false,

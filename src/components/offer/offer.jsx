@@ -5,12 +5,10 @@ import ReviewsList from "../reviews-list/reviews-list.jsx";
 import Map from "../map/map.jsx";
 import CardsList from "../cards-list/cards-list.jsx";
 import {CardClass} from "../../const.js";
-import {getNearbyOffers, getNearbyOffersStatus, getReviews, getReviewsStatus} from "../../reducer/data/selectors.js";
+import {getNearbyOffers, getReviews} from "../../reducer/data/selectors.js";
 
-const Offer = ({offer, nearbyOffers, isNearbyOffersLoading, reviews, isReviewsLoading}) => {
-  if (isReviewsLoading || isNearbyOffersLoading) {
-    return false;
-  }
+const Offer = ({offer, nearbyOffers, reviews}) => {
+
 
   const {title, description, price, rating, type, isPremium, quantityBedrooms, maxAdults, options, images, host} = offer;
 
@@ -189,9 +187,7 @@ const Offer = ({offer, nearbyOffers, isNearbyOffersLoading, reviews, isReviewsLo
 
 const mapStateToProps = (state) => ({
   nearbyOffers: getNearbyOffers(state),
-  isNearbyOffersLoading: getNearbyOffersStatus(state),
   reviews: getReviews(state),
-  isReviewsLoading: getReviewsStatus(state),
 });
 
 Offer.propTypes = {
@@ -214,8 +210,6 @@ Offer.propTypes = {
   }),
   reviews: PropTypes.array.isRequired,
   nearbyOffers: PropTypes.array.isRequired,
-  isNearbyOffersLoading: PropTypes.bool.isRequired,
-  isReviewsLoading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(Offer);

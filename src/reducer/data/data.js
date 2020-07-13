@@ -3,10 +3,8 @@ import {extend, SORT_TYPES, parseOffer, parseReview} from "../../utils/utils";
 const initialState = {
   offers: [],
   nearbyOffers: [],
-  isNearbyOffersLoading: true,
   activeOffer: null,
   reviews: [],
-  isReviewsLoading: true,
   currentCity: ``,
   citiesOffersList: [],
   sortListIsOpen: false,
@@ -112,14 +110,12 @@ export const reducer = (state = initialState, action) => {
     case ActionType.LOAD_NEARBY_OFFERS:
       let parsedNearbyOffers = action.payload.map((offer) => parseOffer(offer));
       return extend(state, {
-        nearbyOffers: parsedNearbyOffers,
-        isNearbyOffersLoading: false
+        nearbyOffers: parsedNearbyOffers
       });
     case ActionType.LOAD_REVIEWS:
       let parsedReviews = action.payload.map((review) => parseReview(review));
       return extend(state, {
-        reviews: parsedReviews,
-        isReviewsLoading: false
+        reviews: parsedReviews
       });
   }
 
