@@ -5,7 +5,7 @@ import ReviewsList from "../reviews-list/reviews-list.jsx";
 import Map from "../map/map.jsx";
 import CardsList from "../cards-list/cards-list.jsx";
 import {CardClass} from "../../const.js";
-import {getNearbyOffers, getReviews} from "../../reducer/data/selectors.js";
+import NameSpace from "../../reducer/name-space.js";
 
 const Offer = ({offer, nearbyOffers, reviews}) => {
 
@@ -186,8 +186,8 @@ const Offer = ({offer, nearbyOffers, reviews}) => {
 };
 
 const mapStateToProps = (state) => ({
-  nearbyOffers: getNearbyOffers(state),
-  reviews: getReviews(state),
+  nearbyOffers: state[NameSpace.DATA].nearbyOffers,
+  reviews: state[NameSpace.DATA].reviews
 });
 
 Offer.propTypes = {

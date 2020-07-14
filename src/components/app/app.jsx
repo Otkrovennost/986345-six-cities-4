@@ -5,7 +5,7 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import Main from "../main/main.jsx";
 import Offer from "../offer/offer.jsx";
 import {Operation as DataOperation, ActionCreator} from "../../reducer/data/data.js";
-import {getActiveOffer} from "../../reducer/data/selectors.js";
+import NameSpace from "../../reducer/name-space.js";
 
 class App extends PureComponent {
   constructor(props) {
@@ -41,7 +41,7 @@ class App extends PureComponent {
   }
 }
 const mapStateToProps = (state) => ({
-  activeOffer: getActiveOffer(state),
+  activeOffer: state[NameSpace.DATA].activeOffer
 });
 
 const mapDispatchToProps = (dispatch) => ({

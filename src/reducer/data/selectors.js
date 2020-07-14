@@ -1,33 +1,16 @@
 import NameSpace from "../name-space.js";
+import {createSelector} from "reselect";
+import {getSortedOffers, getOffersByCity} from "../../utils/utils.js";
 
-export const getCurrentCity = (state) => {
-  return state[NameSpace.DATA].currentCity;
-};
+const getCurrentCity = (state) => state[NameSpace.DATA].currentCity;
+const getOffers = (state) => state[NameSpace.DATA].offers;
+const getCurrentSortType = (state) => state[NameSpace.DATA].currentSortType;
 
-export const getOffers = (state) => {
-  return state[NameSpace.DATA].offers;
-};
-
-export const getActiveOffer = (state) => {
-  return state[NameSpace.DATA].activeOffer;
-};
-
-export const getNearbyOffers = (state) => {
-  return state[NameSpace.DATA].nearbyOffers;
-};
-
-export const getReviews = (state) => {
-  return state[NameSpace.DATA].reviews;
-};
-
-export const getCurrentSortType = (state) => {
-  return state[NameSpace.DATA].currentSortType;
-};
-
-export const getCitiesOffersList = (state) => {
-  return state[NameSpace.DATA].citiesOffersList;
-};
-
-export const getSortListIsOpen = (state) => {
-  return state[NameSpace.DATA].sortListIsOpen;
-};
+export const getCurrentOffers = createSelector(
+    getCurrentCity,
+    getOffers,
+    getCurrentSortType,
+    (curCity, offers, sortType) => {
+      return getSortedOffers(getOffersByCity(curCity, offers), sortType);
+    }
+);

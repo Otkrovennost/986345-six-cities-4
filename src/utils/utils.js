@@ -28,46 +28,44 @@ export const getSortedOffers = (offersList, sortType) => {
 };
 
 export const parseOffer = (data) => {
-  let offer = {};
-  offer.id = data[`id`];
-  offer.city = data[`city`][`name`];
-  offer.title = data[`title`];
-  offer.coords = [];
-  offer.coords[0] = data[`location`][`latitude`];
-  offer.coords[1] = data[`location`][`longitude`];
-  offer.zoom = data[`location`][`zoom`];
-  offer.description = data[`description`];
-  offer.price = data[`price`];
-  offer.rating = data[`rating`];
-  offer.type = data[`type`];
-  offer.photo = data[`preview_image`];
-  offer.isPremium = data[`is_premium`];
-  offer.bookmark = data[`is_favorite`];
-  offer.quantityBedrooms = data[`bedrooms`];
-  offer.maxAdults = data[`max_adults`];
-  offer.options = data[`goods`];
-  offer.images = data[`images`];
-  offer.host = {};
-  offer.host.avatarUrl = data[`host`][`avatar_url`];
-  offer.host.isSuper = data[`host`][`is_pro`];
-  offer.host.name = data[`host`][`name`];
-  offer.host.id = data[`host`][`id`];
-  offer.location = data[`location`];
-
-  return offer;
+  return {
+    id: data[`id`],
+    city: data[`city`][`name`],
+    title: data[`title`],
+    coords: [data[`location`][`latitude`], data[`location`][`longitude`]],
+    zoom: data[`location`][`zoom`],
+    description: data[`description`],
+    price: data[`price`],
+    rating: data[`rating`],
+    type: data[`type`],
+    photo: data[`preview_image`],
+    isPremium: data[`is_premium`],
+    bookmark: data[`is_favorite`],
+    quantityBedrooms: data[`bedrooms`],
+    maxAdults: data[`max_adults`],
+    options: data[`goods`],
+    images: data[`images`],
+    host: {
+      avatarUrl: data[`host`][`avatar_url`],
+      isSuper: data[`host`][`is_pro`],
+      name: data[`host`][`name`],
+      id: data[`host`][`id`]
+    },
+    location: data[`location`]
+  };
 };
 
 export const parseReview = (data) => {
-  let review = {};
-  review.text = data[`comment`];
-  review.date = data[`date`];
-  review.id = data[`id`];
-  review.rating = data[`rating`];
-  review.user = {};
-  review.user.avatar = data[`user`][`avatar_url`];
-  review.user.id = data[`user`][`id`];
-  review.user.isPro = data[`user`][`is_pro`];
-  review.user.name = data[`user`][`name`];
-
-  return review;
+  return {
+    text: data[`comment`],
+    date: data[`date`],
+    id: data[`id`],
+    rating: data[`rating`],
+    user: {
+      avatar: data[`user`][`avatar_url`],
+      id: data[`user`][`id`],
+      isPro: data[`user`][`is_pro`],
+      name: data[`user`][`name`]
+    }
+  };
 };
