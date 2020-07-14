@@ -1,7 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../reducer";
+import {ActionCreator} from "../../reducer/data/data";
 import PropTypes from "prop-types";
+import NameSpace from "../../reducer/name-space.js";
 
 const sortingType = [`Popular`, `Price: low to high`, `Price: high to low`, `Top rated first`];
 
@@ -28,8 +29,8 @@ const Sorting = ({currentSortType, sortListIsOpen, onSortListClick, onSortTypeCl
 };
 
 const mapStateToProps = (state) => ({
-  currentSortType: state.currentSortType,
-  sortListIsOpen: state.sortListIsOpen
+  currentSortType: state[NameSpace.DATA].currentSortType,
+  sortListIsOpen: state[NameSpace.DATA].sortListIsOpen
 });
 
 const mapDispatchToProps = (dispatch) => ({

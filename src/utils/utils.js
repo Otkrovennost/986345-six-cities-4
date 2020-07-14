@@ -26,3 +26,46 @@ export const getSortedOffers = (offersList, sortType) => {
       return offersList.slice();
   }
 };
+
+export const parseOffer = (data) => {
+  return {
+    id: data[`id`],
+    city: data[`city`][`name`],
+    title: data[`title`],
+    coords: [data[`location`][`latitude`], data[`location`][`longitude`]],
+    zoom: data[`location`][`zoom`],
+    description: data[`description`],
+    price: data[`price`],
+    rating: data[`rating`],
+    type: data[`type`],
+    photo: data[`preview_image`],
+    isPremium: data[`is_premium`],
+    bookmark: data[`is_favorite`],
+    quantityBedrooms: data[`bedrooms`],
+    maxAdults: data[`max_adults`],
+    options: data[`goods`],
+    images: data[`images`],
+    host: {
+      avatarUrl: data[`host`][`avatar_url`],
+      isSuper: data[`host`][`is_pro`],
+      name: data[`host`][`name`],
+      id: data[`host`][`id`]
+    },
+    location: data[`location`]
+  };
+};
+
+export const parseReview = (data) => {
+  return {
+    text: data[`comment`],
+    date: data[`date`],
+    id: data[`id`],
+    rating: data[`rating`],
+    user: {
+      avatar: data[`user`][`avatar_url`],
+      id: data[`user`][`id`],
+      isPro: data[`user`][`is_pro`],
+      name: data[`user`][`name`]
+    }
+  };
+};

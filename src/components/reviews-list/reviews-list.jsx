@@ -5,10 +5,10 @@ import Review from "../review/review.jsx";
 const ReviewsList = ({reviews}) => {
   return (
     <ul className="reviews__list">
-      {reviews.map((review, index) =>
+      {reviews.map((review) =>
         <Review
           review={review}
-          key={index}
+          key={review.id}
         />
       )}
     </ul>

@@ -1,12 +1,16 @@
 import React from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import Map from "../map/map.jsx";
 import CardsList from "../cards-list/cards-list.jsx";
 import {CardClass} from "../../const.js";
+import NameSpace from "../../reducer/name-space.js";
 
-const Offer = ({offer}) => {
-  const {title, description, price, rating, type, isPremium, quantityBedrooms, maxAdults, options, images, host, reviews, nearOffers} = offer;
+const Offer = ({offer, nearbyOffers, reviews}) => {
+
+
+  const {title, description, price, rating, type, isPremium, quantityBedrooms, maxAdults, options, images, host} = offer;
 
   const ratingPercentage = `${rating * 20}%`;
   const premiumClass = isPremium ? `property__mark` : `property__mark visually-hidden`;
@@ -46,7 +50,7 @@ const Offer = ({offer}) => {
                     <img className="property__image" src={image} alt="Photo studio" />
                   </div>
                 );
-              })
+              }).slice(0, 6)
               }
             </div>
           </div>
@@ -166,20 +170,25 @@ const Offer = ({offer}) => {
           </div>
           <section className="property__map map">
             <Map
-              offers={nearOffers}
+              offers={nearbyOffers}
             />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CardsList offers={nearOffers} cardClass={CardClass.NEAR_PLACES}/>
+            <CardsList offers={nearbyOffers} cardClass={CardClass.NEAR_PLACES}/>
           </section>
         </div>
       </main>
     </div>
   );
 };
+
+const mapStateToProps = (state) => ({
+  nearbyOffers: state[NameSpace.DATA].nearbyOffers,
+  reviews: state[NameSpace.DATA].reviews
+});
 
 Offer.propTypes = {
   offer: PropTypes.shape({
@@ -197,10 +206,10 @@ Offer.propTypes = {
       avatarUrl: PropTypes.string.isRequired,
       isSuper: PropTypes.bool.isRequired,
       name: PropTypes.string.isRequired
-    }),
-    reviews: PropTypes.array.isRequired,
-    nearOffers: PropTypes.array.isRequired
-  })
+    })
+  }),
+  reviews: PropTypes.array.isRequired,
+  nearbyOffers: PropTypes.array.isRequired,
 };
 
-export default Offer;
+export default connect(mapStateToProps)(Offer);

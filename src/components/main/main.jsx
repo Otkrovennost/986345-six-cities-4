@@ -5,9 +5,10 @@ import CardsList from "../cards-list/cards-list.jsx";
 import Map from "../map/map.jsx";
 import {CardClass} from "../../const.js";
 import CitiesList from "../cities-list/cities-list.jsx";
-import {getSortedOffers, getOffersByCity} from "../../utils/utils";
+import {getCurrentOffers} from "../../reducer/data/selectors.js";
 import Sorting from "../sorting/sorting.jsx";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
+import NameSpace from "../../reducer/name-space.js";
 
 const Main = ({onTitleClick, currentCity, citiesOffersList, currentOffers, currentItem, onItemMouseOver, onItemMouseOut}) => {
   const mainClass = currentOffers.length > 0 ? `page__main page__main--index` : `page__main page__main--index page__main--index-empty`;
@@ -80,8 +81,8 @@ const Main = ({onTitleClick, currentCity, citiesOffersList, currentOffers, curre
 };
 
 const mapStateToProps = (state) => ({
-  citiesOffersList: state.citiesOffersList,
-  currentOffers: getSortedOffers(getOffersByCity(state.currentCity, state.offers), state.currentSortType)
+  citiesOffersList: state[NameSpace.DATA].citiesOffersList,
+  currentOffers: getCurrentOffers(state)
 });
 
 Main.propTypes = {
