@@ -90,6 +90,9 @@ it(`Should Main render correctly`, () => {
       currentSortType: `Popular`,
       currentOffers: getSortedOffers(getOffersByCity(`Amsterdam`, CURRENT_OFFERS), `Top rated first`),
       sortListIsOpen: false
+    },
+    [NameSpace.USER]: {
+      email: `ab@mail.ru`
     }
   });
 
@@ -100,6 +103,7 @@ it(`Should Main render correctly`, () => {
             onTitleClick={() => {}}
             onItemMouseOver={() => {}}
             onItemMouseOut={() => {}}
+            authorizationStatus={`AUTH`}
           />
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)

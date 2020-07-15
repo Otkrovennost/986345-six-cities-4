@@ -1,16 +1,17 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import CardsList from "../cards-list/cards-list.jsx";
 import Map from "../map/map.jsx";
 import {CardClass} from "../../const.js";
 import CitiesList from "../cities-list/cities-list.jsx";
-import {getCurrentOffers} from "../../reducer/data/selectors.js";
+import {getCurrentOffers, getCitiesOffersList} from "../../reducer/data/selectors.js";
 import Sorting from "../sorting/sorting.jsx";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
-import NameSpace from "../../reducer/name-space.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {getEmail} from "../../reducer/user/selectors.js";
 
-const Main = ({onTitleClick, currentCity, citiesOffersList, currentOffers, currentItem, onItemMouseOver, onItemMouseOut}) => {
+const Main = ({onTitleClick, currentCity, citiesOffersList, currentOffers, currentItem, onItemMouseOver, onItemMouseOut, authorizationStatus, email}) => {
   const mainClass = currentOffers.length > 0 ? `page__main page__main--index` : `page__main page__main--index page__main--index-empty`;
 
   return (
@@ -27,9 +28,14 @@ const Main = ({onTitleClick, currentCity, citiesOffersList, currentOffers, curre
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
                   <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    {authorizationStatus === AuthorizationStatus.NO_AUTH ?
+                      <span className="header__login">Sign in</span> :
+                      <Fragment>
+                        <div className="header__avatar-wrapper user__avatar-wrapper">
+                        </div>
+                        <span className="header__user-name user__name">{email}</span>
+                      </Fragment>
+                    }
                   </a>
                 </li>
               </ul>
@@ -81,7 +87,8 @@ const Main = ({onTitleClick, currentCity, citiesOffersList, currentOffers, curre
 };
 
 const mapStateToProps = (state) => ({
-  citiesOffersList: state[NameSpace.DATA].citiesOffersList,
+  email: getEmail(state),
+  citiesOffersList: getCitiesOffersList(state),
   currentOffers: getCurrentOffers(state)
 });
 
@@ -92,7 +99,9 @@ Main.propTypes = {
   onItemMouseOver: PropTypes.func.isRequired,
   onItemMouseOut: PropTypes.func.isRequired,
   currentOffers: PropTypes.array,
-  citiesOffersList: PropTypes.array
+  citiesOffersList: PropTypes.array,
+  email: PropTypes.string,
+  authorizationStatus: PropTypes.string,
 };
 
 export default connect(mapStateToProps)(withActiveItem(Main));

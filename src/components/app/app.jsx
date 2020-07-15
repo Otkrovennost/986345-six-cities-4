@@ -5,7 +5,10 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import Main from "../main/main.jsx";
 import Offer from "../offer/offer.jsx";
 import {Operation as DataOperation, ActionCreator} from "../../reducer/data/data.js";
-import NameSpace from "../../reducer/name-space.js";
+import {getActiveOffer} from "../../reducer/data/selectors.js";
+import SignIn from "../sign-in/sign-in.jsx";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 
 class App extends PureComponent {
   constructor(props) {
@@ -13,19 +16,27 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    if (this.props.activeOffer) {
+    const {activeOffer, onTitleClick, authorizationStatus} = this.props;
+    if (activeOffer) {
       return (
         <Offer
-          offer={this.props.activeOffer}
-        />
-      );
-    } else {
-      return (
-        <Main
-          onTitleClick={this.props.onTitleClick}
+          offer={activeOffer}
         />
       );
     }
+
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      return (
+        <SignIn />
+      );
+    }
+
+    return (
+      <Main
+        onTitleClick={onTitleClick}
+        authorizationStatus={authorizationStatus}
+      />
+    );
   }
 
   render() {
@@ -35,13 +46,17 @@ class App extends PureComponent {
           <Route exact path="/">
             {this._renderApp()}
           </Route>
+          <Route exact path="/dev-auth">
+            <SignIn />
+          </Route>
         </Switch>
       </BrowserRouter>
     );
   }
 }
 const mapStateToProps = (state) => ({
-  activeOffer: state[NameSpace.DATA].activeOffer
+  authorizationStatus: getAuthorizationStatus(state),
+  activeOffer: getActiveOffer(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -54,7 +69,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 App.propTypes = {
   activeOffer: PropTypes.object,
-  onTitleClick: PropTypes.func.isRequired
+  onTitleClick: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
