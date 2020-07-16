@@ -96,7 +96,7 @@ it(`Render App`, () => {
     },
     [NameSpace.USER]: {
       authorizationStatus: AuthorizationStatus.AUTH,
-      email: `el@mail.ru`
+      email: `ab@mail.ru`
     }
   });
 

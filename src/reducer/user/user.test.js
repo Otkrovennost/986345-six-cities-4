@@ -4,6 +4,7 @@ import {reducer, ActionCreator, ActionType, AuthorizationStatus} from "./user.js
 it(`Reducer without additional parameters should return initial state`, () => {
   expect(reducer(void 0, {})).toEqual({
     authorizationStatus: AuthorizationStatus.NO_AUTH,
+    email: ``
   });
 });
 
@@ -55,6 +56,12 @@ describe(`Action creators work correctly`, () => {
     expect(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)).toEqual({
       type: ActionType.REQUIRED_AUTHORIZATION,
       payload: AuthorizationStatus.AUTH,
+    });
+  });
+  it(`Action creator for require authorization data returns correct action`, () => {
+    expect(ActionCreator.authorizationData(`abc`)).toEqual({
+      type: ActionType.AUTHORIZATION_DATA,
+      payload: `abc`,
     });
   });
 });

@@ -2,50 +2,13 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import NameSpace from "../../reducer/name-space.js";
-import Offer from "./offer.jsx";
+import {getOffersByCity, getSortedOffers} from "../../../utils/utils";
+import NameSpace from "../../../reducer/name-space.js";
+import MainPage from "./main-page.jsx";
 
 const mockStore = configureStore([]);
-const OFFER = {
-  id: 1,
-  city: `Amsterdam`,
-  title: `Beautiful & luxurious apartment at great location`,
-  coords: [52.3909553943508, 4.85309666406198],
-  description: ` A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
-  price: 120,
-  rating: 4.8,
-  type: `Apartment`,
-  photo: `img/apartment-01.jpg`,
-  isPremium: true,
-  bookmark: false,
-  quantityBedrooms: 3,
-  maxAdults: 4,
-  options: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
-  images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
-  host: {
-    avatarUrl: `img/avatar-angelina.jpg`,
-    id: 1,
-    isSuper: true,
-    name: `Angelina`
-  }
-};
-
-const REVIEWS = [
-  {
-    text: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
-    date: `2019-04-24`,
-    id: 1,
-    rating: 5,
-    user: {
-      id: 1,
-      name: `Max`,
-      avatar: `img/avatar-max.jpg`,
-      isPro: false
-    }
-  }
-];
-
-const NEARBY_OFFERS = [
+const CITIES_LIST = [`Amsterdam`, `Paris`, `Cologne`, `Brussels`, `Hamburg`];
+const CURRENT_OFFERS = [
   {
     id: 1,
     city: `Amsterdam`,
@@ -118,19 +81,29 @@ const NEARBY_OFFERS = [
   }
 ];
 
-it(`Should Offer render correctly`, () => {
+it(`Should Main render correctly`, () => {
   const store = mockStore({
     [NameSpace.DATA]: {
-      nearbyOffers: NEARBY_OFFERS,
-      reviews: REVIEWS
+      offers: CURRENT_OFFERS,
+      currentCity: `Amsterdam`,
+      citiesOffersList: CITIES_LIST,
+      currentSortType: `Popular`,
+      currentOffers: getSortedOffers(getOffersByCity(`Amsterdam`, CURRENT_OFFERS), `Top rated first`),
+      sortListIsOpen: false
+    },
+    [NameSpace.USER]: {
+      authorizationStatus: `AUTH`,
+      email: `ab@mail.ru`
     }
   });
 
   const tree = renderer
     .create(
         <Provider store={store}>
-          <Offer
-            offer={OFFER}
+          <MainPage
+            onTitleClick={() => {}}
+            onItemMouseOver={() => {}}
+            onItemMouseOut={() => {}}
           />
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)

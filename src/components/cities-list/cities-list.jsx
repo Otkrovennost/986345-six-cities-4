@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {ActionCreator} from "../../reducer/data/data";
-import NameSpace from "../../reducer/name-space.js";
+import {getCurrentCity} from "../../reducer/data/selectors.js";
 
 const CitiesList = ({currentCity, citiesOffersList, onCityClick}) => {
   const listOfCities = citiesOffersList.map((city) =>
@@ -21,7 +21,7 @@ const CitiesList = ({currentCity, citiesOffersList, onCityClick}) => {
 };
 
 const mapStateToProps = (state) => ({
-  currentCity: state[NameSpace.DATA].currentCity
+  currentCity: getCurrentCity(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
