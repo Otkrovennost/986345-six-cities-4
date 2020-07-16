@@ -2,9 +2,9 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import SignIn from "./sign-in.jsx";
-import NameSpace from "../../reducer/name-space.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
+import SignInPage from "./sign-in-page.jsx";
+import NameSpace from "../../../reducer/name-space.js";
+import {AuthorizationStatus} from "../../../reducer/user/user.js";
 
 const mockStore = configureStore([]);
 
@@ -18,7 +18,7 @@ it(`Should authScreen component render correctly`, () => {
 
   const tree = renderer.create(
       <Provider store={store}>
-        <SignIn />
+        <SignInPage />
       </Provider>, {
         createNodeMock: () => document.createElement(`div`)
       }).toJSON();

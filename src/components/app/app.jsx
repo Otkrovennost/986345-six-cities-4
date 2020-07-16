@@ -2,11 +2,11 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
-import Main from "../main/main.jsx";
-import Offer from "../offer/offer.jsx";
-import {Operation as DataOperation, ActionCreator} from "../../reducer/data/data.js";
+import MainPage from "../pages/main-page/main-page.jsx";
+import OfferPage from "../pages/offer-page/offer-page.jsx";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {getActiveOffer} from "../../reducer/data/selectors.js";
-import SignIn from "../sign-in/sign-in.jsx";
+import SignInPage from "../pages/sign-in-page/sign-in-page.jsx";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 
@@ -19,7 +19,7 @@ class App extends PureComponent {
     const {activeOffer, onTitleClick, authorizationStatus} = this.props;
     if (activeOffer) {
       return (
-        <Offer
+        <OfferPage
           offer={activeOffer}
         />
       );
@@ -27,14 +27,13 @@ class App extends PureComponent {
 
     if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
       return (
-        <SignIn />
+        <SignInPage />
       );
     }
 
     return (
-      <Main
+      <MainPage
         onTitleClick={onTitleClick}
-        authorizationStatus={authorizationStatus}
       />
     );
   }
@@ -47,7 +46,7 @@ class App extends PureComponent {
             {this._renderApp()}
           </Route>
           <Route exact path="/dev-auth">
-            <SignIn />
+            <SignInPage />
           </Route>
         </Switch>
       </BrowserRouter>
@@ -61,9 +60,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onTitleClick(offer) {
-    dispatch(DataOperation.loadNearbyOffers(offer.id))
-      .then(() => dispatch(DataOperation.loadReviews(offer.id)))
-      .then(() => dispatch(ActionCreator.changeOffer(offer)));
+    dispatch(DataOperation.changeOffer(offer));
   }
 });
 

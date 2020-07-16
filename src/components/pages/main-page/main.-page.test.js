@@ -2,9 +2,9 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import {getOffersByCity, getSortedOffers} from "../../utils/utils";
-import NameSpace from "../../reducer/name-space.js";
-import Main from "./main.jsx";
+import {getOffersByCity, getSortedOffers} from "../../../utils/utils";
+import NameSpace from "../../../reducer/name-space.js";
+import MainPage from "./main-page.jsx";
 
 const mockStore = configureStore([]);
 const CITIES_LIST = [`Amsterdam`, `Paris`, `Cologne`, `Brussels`, `Hamburg`];
@@ -92,6 +92,7 @@ it(`Should Main render correctly`, () => {
       sortListIsOpen: false
     },
     [NameSpace.USER]: {
+      authorizationStatus: `AUTH`,
       email: `ab@mail.ru`
     }
   });
@@ -99,11 +100,10 @@ it(`Should Main render correctly`, () => {
   const tree = renderer
     .create(
         <Provider store={store}>
-          <Main
+          <MainPage
             onTitleClick={() => {}}
             onItemMouseOver={() => {}}
             onItemMouseOut={() => {}}
-            authorizationStatus={`AUTH`}
           />
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)

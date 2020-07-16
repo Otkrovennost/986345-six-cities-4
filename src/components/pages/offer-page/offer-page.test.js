@@ -2,8 +2,8 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import NameSpace from "../../reducer/name-space.js";
-import Offer from "./offer.jsx";
+import NameSpace from "../../../reducer/name-space.js";
+import OfferPage from "./offer-page.jsx";
 
 const mockStore = configureStore([]);
 const OFFER = {
@@ -123,13 +123,17 @@ it(`Should Offer render correctly`, () => {
     [NameSpace.DATA]: {
       nearbyOffers: NEARBY_OFFERS,
       reviews: REVIEWS
+    },
+    [NameSpace.USER]: {
+      authorizationStatus: `AUTH`,
+      email: `ab@mail.ru`
     }
   });
 
   const tree = renderer
     .create(
         <Provider store={store}>
-          <Offer
+          <OfferPage
             offer={OFFER}
           />
         </Provider>, {

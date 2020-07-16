@@ -77,6 +77,11 @@ export const Operation = {
         dispatch(ActionCreator.loadReviews(response.data));
       });
   },
+  changeOffer: (offer) => (dispatch) => {
+    return dispatch(Operation.loadNearbyOffers(offer.id))
+            .then(() => dispatch(Operation.loadReviews(offer.id)))
+            .then(() => dispatch(ActionCreator.changeOffer(offer)));
+  }
 };
 
 export const reducer = (state = initialState, action) => {
