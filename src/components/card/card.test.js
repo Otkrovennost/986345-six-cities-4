@@ -1,7 +1,12 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import {Provider} from "react-redux";
+import {BrowserRouter} from "react-router-dom";
+import configureStore from "redux-mock-store";
+import NameSpace from "../../reducer/name-space.js";
 import Card from "./card.jsx";
 
+const mockStore = configureStore([]);
 const offer = {
   id: 1,
   title: `Beautiful & luxurious apartment at great location`,
@@ -14,15 +19,24 @@ const offer = {
 };
 
 it(`Should Card render correctly`, () => {
+  const store = mockStore({
+    [NameSpace.USER]: {
+      authorizationStatus: `AUTH`
+    }
+  });
   const tree = renderer
-    .create(<Card
-      offer={offer}
-      onTitleClick={() => {}}
-      onItemMouseOver={() => {}}
-      onItemMouseOut={() => {}}
-      cardClass={`cities`}
-    />)
-    .toJSON();
+  .create(
+      <Provider store={store}>
+        <BrowserRouter>
+          <Card
+            offer={offer}
+            onTitleClick={() => {}}
+            onItemMouseOver={() => {}}
+            onItemMouseOut={() => {}}
+            cardClass={`cities`}
+          />
+        </BrowserRouter>
+      </Provider>).toJSON();
 
   expect(tree).toMatchSnapshot();
 });

@@ -2,7 +2,7 @@ import NameSpace from "../name-space.js";
 import {createSelector} from "reselect";
 import {getSortedOffers, getOffersByCity} from "../../utils/utils.js";
 
-const getOffers = (state) => state[NameSpace.DATA].offers;
+export const getOffers = (state) => state[NameSpace.DATA].offers;
 export const getCurrentCity = (state) => state[NameSpace.DATA].currentCity;
 export const getCurrentSortType = (state) => state[NameSpace.DATA].currentSortType;
 export const getActiveOffer = (state) => state[NameSpace.DATA].activeOffer;
@@ -10,6 +10,10 @@ export const getNearbyOffers = (state) => state[NameSpace.DATA].nearbyOffers;
 export const getReviews = (state) => state[NameSpace.DATA].reviews;
 export const getCitiesOffersList = (state) => state[NameSpace.DATA].citiesOffersList;
 export const getSortListIsOpen = (state) => state[NameSpace.DATA].sortListIsOpen;
+export const getReviewsStatus = (state) => state[NameSpace.DATA].isReviewsLoading;
+export const getNearbyOffersStatus = (state) => state[NameSpace.DATA].isNearbyOffersLoading;
+export const getFavoriteOffers = (state) => state[NameSpace.DATA].favoriteOffers;
+export const getFavoriteOffersStatus = (state) => state[NameSpace.DATA].isFavoriteOffersLoading;
 
 export const getCurrentOffers = createSelector(
     getCurrentCity,

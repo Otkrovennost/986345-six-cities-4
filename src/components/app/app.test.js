@@ -92,11 +92,16 @@ it(`Render App`, () => {
       currentCity: `Amsterdam`,
       citiesOffersList: CITIES_LIST,
       sortListIsOpen: false,
-      currentSortType: `Popular`
+      currentSortType: `Popular`,
+      isNearbyOffersLoading: true,
+      isReviewsLoading: true,
+      isFavoriteOffersLoading: true,
+      favoriteOffers: [],
     },
     [NameSpace.USER]: {
       authorizationStatus: AuthorizationStatus.AUTH,
-      email: `ab@mail.ru`
+      email: `ab@mail.ru`,
+      isSignIn: true
     }
   });
 

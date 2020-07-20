@@ -1,7 +1,7 @@
 import React from "react";
 import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import Card from "./card.jsx";
+import {Card} from "./card.jsx";
 
 const offer = {
   id: 1,
@@ -39,7 +39,7 @@ describe(`Card`, () => {
     title.simulate(`click`);
 
     expect(onTitleClick).toHaveBeenCalledTimes(1);
-    expect(onTitleClick).toHaveBeenCalledWith(offer);
+    expect(onTitleClick).toHaveBeenCalledWith(offer.id);
 
     card.find(`.place-card`).simulate(`mouseOver`);
 

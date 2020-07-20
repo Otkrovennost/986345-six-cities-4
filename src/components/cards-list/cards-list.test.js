@@ -1,7 +1,12 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import {Provider} from "react-redux";
+import {BrowserRouter} from "react-router-dom";
+import configureStore from "redux-mock-store";
+import NameSpace from "../../reducer/name-space.js";
 import CardsList from "./cards-list.jsx";
 
+const mockStore = configureStore([]);
 const offers = [
   {
     id: 15,
@@ -201,14 +206,25 @@ const offers = [
 ];
 
 it(`Should CardsList render correctly`, () => {
+  const store = mockStore({
+    [NameSpace.USER]: {
+      authorizationStatus: `AUTH`
+    }
+  });
   const tree = renderer
-    .create(<CardsList
-      offers={offers}
-      onItemMouseOver={() => {}}
-      onItemMouseOut={() => {}}
-      onCardHover={() => {}}
-      cardClass={`cities`}
-    />)
+    .create(
+        <Provider store={store}>
+          <BrowserRouter>
+            <CardsList
+              offers={offers}
+              onItemMouseOver={() => {}}
+              onItemMouseOut={() => {}}
+              onCardHover={() => {}}
+              cardClass={`cities`}
+            />
+          </BrowserRouter>
+        </Provider>
+    )
     .toJSON();
 
   expect(tree).toMatchSnapshot();

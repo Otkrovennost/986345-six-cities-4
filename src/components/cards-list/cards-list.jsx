@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Card from "../card/card.jsx";
 
-const CardsList = ({offers, onTitleClick, onItemMouseOver, onItemMouseOut, cardClass}) => {
+const CardsList = ({offers, onItemMouseOver, onItemMouseOut, cardClass}) => {
   const cardsListName = cardClass === `cities` ? `cities__places-list places__list tabs__content` : `near-places__list places__list`;
 
   return (
@@ -11,7 +11,6 @@ const CardsList = ({offers, onTitleClick, onItemMouseOver, onItemMouseOut, cardC
         <Card
           offer={offer}
           key={offer.id}
-          onTitleClick={onTitleClick}
           onItemMouseOver={onItemMouseOver}
           onItemMouseOut={onItemMouseOut}
           cardClass={cardClass}
@@ -25,7 +24,6 @@ CardsList.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
   })),
-  onTitleClick: PropTypes.func,
   onItemMouseOver: PropTypes.func,
   onItemMouseOut: PropTypes.func,
   cardClass: PropTypes.string

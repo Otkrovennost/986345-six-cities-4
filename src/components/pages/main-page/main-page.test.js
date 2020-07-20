@@ -1,6 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
+import {BrowserRouter} from "react-router-dom";
 import configureStore from "redux-mock-store";
 import {getOffersByCity, getSortedOffers} from "../../../utils/utils";
 import NameSpace from "../../../reducer/name-space.js";
@@ -100,11 +101,13 @@ it(`Should Main render correctly`, () => {
   const tree = renderer
     .create(
         <Provider store={store}>
-          <MainPage
-            onTitleClick={() => {}}
-            onItemMouseOver={() => {}}
-            onItemMouseOut={() => {}}
-          />
+          <BrowserRouter >
+            <MainPage
+              onTitleClick={() => {}}
+              onItemMouseOver={() => {}}
+              onItemMouseOut={() => {}}
+            />
+          </BrowserRouter>
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)
         }

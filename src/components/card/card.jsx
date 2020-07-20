@@ -1,35 +1,57 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {Link} from 'react-router-dom';
+import {CardClass} from "../../const.js";
+import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
 
-const Card = ({offer, onTitleClick, onItemMouseOver, onItemMouseOut, cardClass}) => {
+const Card = ({onTitleClick, offer, onItemMouseOver, onItemMouseOut, cardClass}) => {
   const {id, title, price, type, rating, photo, isPremium, bookmark} = offer;
 
-  const cardClassName = cardClass === `cities` ? `cities__place-card place-card` : `near-places__card place-card`;
-  const cardImageClassName = cardClass === `cities` ? `cities__image-wrapper place-card__image-wrapper` : `near-places__image-wrapper place-card__image-wrapper`;
+  const getCardClass = (currentClass) => {
+    switch (currentClass) {
+      case CardClass.CITIES:
+        return (`cities__place-card place-card`);
+      case CardClass.NEAR_PLACES:
+        return (`near-places__card place-card`);
+      case CardClass.FAVORITES:
+        return (`favorites__card place-card`);
+    }
+    return false;
+  };
 
   const ratingPercentage = `${rating * 20}%`;
   const premiumClass = isPremium ? `place-card__mark` : `place-card__mark visually-hidden`;
   const bookmarkClass = bookmark ? `place-card__bookmark-button place-card__bookmark-button--active button` : `place-card__bookmark-button button`;
 
   return (
-    <article className={cardClassName}
+    <article className={getCardClass(cardClass)}
       key={id}
       onMouseOver={() => {
-        onItemMouseOver(offer);
+        if (cardClass === CardClass.FAVORITES) {
+          return;
+        } else {
+          onItemMouseOver(offer);
+        }
       }}
       onMouseOut={() => {
-        onItemMouseOut();
+        if (cardClass === CardClass.FAVORITES) {
+          return;
+        } else {
+          onItemMouseOut();
+        }
       }}
     >
       <div className={premiumClass}>
         <span>Premium</span>
       </div>
-      <div className={cardImageClassName}>
+      <div className={cardClass + `__image-wrapper place-card__image-wrapper`}>
         <a href="#">
-          <img className="place-card__image" src={photo} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={photo} width={`${cardClass === CardClass.FAVORITES ? `150` : `260`}`} height={`${cardClass === CardClass.FAVORITES ? `110` : `200`}`} alt="Place image" />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${cardClass === CardClass.FAVORITES ? `favorites__card-info` : ``} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -49,18 +71,28 @@ const Card = ({offer, onTitleClick, onItemMouseOver, onItemMouseOut, cardClass})
           </div>
         </div>
         <h2 className="place-card__name"
-          onClick={() => {
-            onTitleClick(offer);
-          }}>
-          <a href="#">
-            {title}
-          </a>
+          onClick={
+            () => {
+              onTitleClick(id);
+            }}>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
 };
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onTitleClick(id) {
+    dispatch(DataOperation.loadNearbyOffers(id));
+    dispatch(DataOperation.loadReviews(id));
+  }
+});
 
 Card.propTypes = {
   offer: PropTypes.shape({
@@ -73,10 +105,11 @@ Card.propTypes = {
     isPremium: PropTypes.bool.isRequired,
     bookmark: PropTypes.bool.isRequired
   }),
-  onTitleClick: PropTypes.func,
   onItemMouseOver: PropTypes.func,
   onItemMouseOut: PropTypes.func,
-  cardClass: PropTypes.string
+  onTitleClick: PropTypes.func,
+  cardClass: PropTypes.string,
+  authorizationStatus: PropTypes.string
 };
-
-export default Card;
+export {Card};
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

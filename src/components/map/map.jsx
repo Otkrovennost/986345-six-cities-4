@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import leaflet from "leaflet";
 
 const icon = leaflet.icon({
-  iconUrl: `img/pin.svg`,
+  iconUrl: `../img/pin.svg`,
   iconSize: [27, 39]
 });
 const iconActive = leaflet.icon({
-  iconUrl: `img/pin-active.svg`,
+  iconUrl: `../img/pin-active.svg`,
   iconSize: [27, 39]
 });
 
@@ -20,7 +20,7 @@ class Map extends PureComponent {
   }
 
   componentDidMount() {
-    const {offers, currentItem} = this.props;
+    const {offers, currentItem, activeOffer} = this.props;
     const city = offers[0].coords;
 
     const zoom = 12;
@@ -41,6 +41,12 @@ class Map extends PureComponent {
 
     this._map.setView(city, zoom);
 
+    if (activeOffer) {
+      leaflet
+      .marker(activeOffer.coords, {icon: iconActive})
+      .addTo(this._layer);
+    }
+
     offers.map((offer) => {
       if (currentItem && offer.id === currentItem.id) {
         leaflet
@@ -55,7 +61,7 @@ class Map extends PureComponent {
   }
 
   componentDidUpdate() {
-    const {offers, currentItem} = this.props;
+    const {offers, currentItem, activeOffer} = this.props;
     const zoom = 12;
     this._layer.clearLayers();
 
@@ -70,6 +76,12 @@ class Map extends PureComponent {
         .addTo(this._layer);
       }
     });
+
+    if (activeOffer) {
+      leaflet
+      .marker(activeOffer.coords, {icon: iconActive})
+      .addTo(this._layer);
+    }
 
     this._map.setView(offers[0].coords, zoom);
   }
@@ -87,6 +99,7 @@ class Map extends PureComponent {
 
 Map.propTypes = {
   offers: PropTypes.array,
+  activeOffer: PropTypes.object,
   currentItem: PropTypes.object
 };
 
