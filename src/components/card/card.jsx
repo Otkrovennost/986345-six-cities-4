@@ -29,17 +29,17 @@ const Card = ({onTitleClick, offer, onItemMouseOver, onItemMouseOut, cardClass})
     <article className={getCardClass(cardClass)}
       key={id}
       onMouseOver={() => {
-        if (cardClass === CardClass.FAVORITES) {
-          return;
-        } else {
+        if (cardClass === CardClass.CITIES) {
           onItemMouseOver(offer);
+        } else {
+          return;
         }
       }}
       onMouseOut={() => {
-        if (cardClass === CardClass.FAVORITES) {
-          return;
-        } else {
+        if (cardClass === CardClass.CITIES) {
           onItemMouseOut();
+        } else {
+          return;
         }
       }}
     >

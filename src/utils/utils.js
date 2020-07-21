@@ -33,7 +33,7 @@ export const parseOffer = (data) => {
     city: data[`city`][`name`],
     title: data[`title`],
     coords: [data[`location`][`latitude`], data[`location`][`longitude`]],
-    zoom: data[`location`][`zoom`],
+    zoom: data[`city`][`location`][`zoom`],
     description: data[`description`],
     price: data[`price`],
     rating: data[`rating`],

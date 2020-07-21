@@ -9,7 +9,6 @@ import Header from "../../header/header.jsx";
 import {CardClass} from "../../../const.js";
 import {getNearbyOffers, getReviews, getOffers, getNearbyOffersStatus, getReviewsStatus} from "../../../reducer/data/selectors.js";
 import {Operation as DataOperation} from "../../../reducer/data/data.js";
-import withActiveItem from "../../../hocs/with-active-item/with-active-item.js";
 import {getSignInStatus} from "../../../reducer/user/selectors.js";
 
 class OfferPage extends PureComponent {
@@ -35,7 +34,7 @@ class OfferPage extends PureComponent {
   }
 
   render() {
-    const {offerId, offers, nearbyOffers, reviews, onItemMouseOver, onItemMouseOut, currentItem, isNearbyOffersLoading, isReviewsLoading} = this.props;
+    const {offerId, offers, nearbyOffers, reviews, isNearbyOffersLoading, isReviewsLoading} = this.props;
 
     if (isReviewsLoading || isNearbyOffersLoading) {
       return false;
@@ -182,7 +181,6 @@ class OfferPage extends PureComponent {
             <section className="property__map map">
               <Map
                 offers={nearbyOffers}
-                currentItem={currentItem}
                 activeOffer={this.offer}
               />
             </section>
@@ -190,7 +188,7 @@ class OfferPage extends PureComponent {
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <CardsList offers={nearbyOffers} cardClass={CardClass.NEAR_PLACES} onItemMouseOver={onItemMouseOver} onItemMouseOut={onItemMouseOut} />
+              <CardsList offers={nearbyOffers} cardClass={CardClass.NEAR_PLACES} />
             </section>
           </div>
         </main>
@@ -237,9 +235,6 @@ OfferPage.propTypes = {
       name: PropTypes.string.isRequired
     })
   }),
-  currentItem: PropTypes.object.isRequired,
-  onItemMouseOver: PropTypes.func.isRequired,
-  onItemMouseOut: PropTypes.func.isRequired,
   offers: PropTypes.array,
   reviews: PropTypes.array.isRequired,
   nearbyOffers: PropTypes.array.isRequired,
@@ -251,4 +246,4 @@ OfferPage.propTypes = {
   offerId: PropTypes.string
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withActiveItem(OfferPage));
+export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);
