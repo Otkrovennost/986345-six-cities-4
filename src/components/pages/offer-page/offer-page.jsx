@@ -1,13 +1,13 @@
 import React, {PureComponent} from "react";
 import {connect} from "react-redux";
-import {Redirect} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import PropTypes from "prop-types";
 import ReviewsList from "../../reviews-list/reviews-list.jsx";
 import Map from "../../map/map.jsx";
 import CardsList from "../../cards-list/cards-list.jsx";
 import Header from "../../header/header.jsx";
-import {CardClass} from "../../../const.js";
-import {getNearbyOffers, getReviews, getOffers, getNearbyOffersStatus, getReviewsStatus} from "../../../reducer/data/selectors.js";
+import {CardClass, AppRoute} from "../../../const.js";
+import {getNearbyOffers, getReviews, getNearbyOffersStatus, getReviewsStatus, getCurrentOffer} from "../../../reducer/data/selectors.js";
 import {Operation as DataOperation} from "../../../reducer/data/data.js";
 import {getSignInStatus} from "../../../reducer/user/selectors.js";
 
@@ -18,31 +18,37 @@ class OfferPage extends PureComponent {
     this._onFavoriteClick = this._onFavoriteClick.bind(this);
   }
 
-  // componentDidMount() {
-  //   const {offerId, loadOfferData} = this.props;
-  //   loadOfferData(offerId);
-  // }
+  componentDidMount() {
+    const {offerId, loadOfferData} = this.props;
+    loadOfferData(offerId);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {offerId, loadOfferData} = this.props;
+
+    if (this.props.offerId !== prevProps.offerId) {
+      loadOfferData(offerId);
+    }
+  }
 
   _onFavoriteClick() {
-    const {onFavoriteButtonClick, isSignIn} = this.props;
+    const {history, onFavoriteButtonClick, isSignIn, offer} = this.props;
     if (!isSignIn) {
-      return <Redirect to="/login" />;
+      return history.push(AppRoute.SIGN_IN);
     }
 
-    onFavoriteButtonClick(this.offer);
+    onFavoriteButtonClick(offer);
     return false;
   }
 
   render() {
-    const {offerId, offers, nearbyOffers, reviews, isNearbyOffersLoading, isReviewsLoading} = this.props;
+    const {offer, nearbyOffers, reviews, isNearbyOffersLoading, isReviewsLoading} = this.props;
 
     if (isReviewsLoading || isNearbyOffersLoading) {
       return false;
     }
 
-    this.offer = offers.find((offer) => offer.id === Number(offerId));
-
-    const {title, description, price, rating, type, isPremium, bookmark, quantityBedrooms, maxAdults, options, images, host} = this.offer;
+    const {title, description, price, rating, type, isPremium, bookmark, quantityBedrooms, maxAdults, options, images, host} = offer;
 
     const ratingPercentage = `${rating * 20}%`;
     const premiumClass = isPremium ? `property__mark` : `property__mark visually-hidden`;
@@ -181,7 +187,7 @@ class OfferPage extends PureComponent {
             <section className="property__map map">
               <Map
                 offers={nearbyOffers}
-                activeOffer={this.offer}
+                activeOffer={offer}
               />
             </section>
           </section>
@@ -197,13 +203,13 @@ class OfferPage extends PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({
-  offers: getOffers(state),
+const mapStateToProps = (state, {offerId}) => ({
+  offer: getCurrentOffer(offerId)(state),
   nearbyOffers: getNearbyOffers(state),
   reviews: getReviews(state),
   isNearbyOffersLoading: getNearbyOffersStatus(state),
   isReviewsLoading: getReviewsStatus(state),
-  isSignIn: getSignInStatus(state)
+  isSignIn: getSignInStatus(state),
 });
 
 
@@ -225,6 +231,7 @@ OfferPage.propTypes = {
     type: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
     isPremium: PropTypes.bool.isRequired,
+    bookmark: PropTypes.bool.isRequired,
     quantityBedrooms: PropTypes.number.isRequired,
     maxAdults: PropTypes.number.isRequired,
     options: PropTypes.array.isRequired,
@@ -243,7 +250,8 @@ OfferPage.propTypes = {
   loadOfferData: PropTypes.func,
   onFavoriteButtonClick: PropTypes.func,
   isSignIn: PropTypes.bool.isRequired,
-  offerId: PropTypes.string
+  offerId: PropTypes.string,
+  history: PropTypes.object
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(OfferPage));

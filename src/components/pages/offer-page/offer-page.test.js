@@ -3,10 +3,11 @@ import {BrowserRouter} from "react-router-dom";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+import thunk from 'redux-thunk';
 import NameSpace from "../../../reducer/name-space.js";
+import {Operation} from '../../../reducer/data/data';
 import OfferPage from "./offer-page.jsx";
 
-const mockStore = configureStore([]);
 const OFFERS = [
   {
     id: 1,
@@ -121,9 +122,18 @@ const NEARBY_OFFERS = [
   }
 ];
 
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+
+jest.mock(`../../../reducer/data/data`);
+Operation.loadNearbyOffers = () => (dispatch) => dispatch(jest.fn());
+Operation.loadReviews = () => (dispatch) => dispatch(jest.fn());
+
+
 it(`Should Offer render correctly`, () => {
   const store = mockStore({
     [NameSpace.DATA]: {
+      offers: OFFERS,
       nearbyOffers: NEARBY_OFFERS,
       reviews: REVIEWS,
       isNearbyOffersLoading: true,
@@ -140,7 +150,6 @@ it(`Should Offer render correctly`, () => {
         <Provider store={store}>
           <BrowserRouter>
             <OfferPage
-              offers={OFFERS}
               offerId={`0`}
               offer={OFFERS[0]}
             />

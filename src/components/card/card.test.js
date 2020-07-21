@@ -30,7 +30,6 @@ it(`Should Card render correctly`, () => {
         <BrowserRouter>
           <Card
             offer={offer}
-            onTitleClick={() => {}}
             onItemMouseOver={() => {}}
             onItemMouseOut={() => {}}
             cardClass={`cities`}

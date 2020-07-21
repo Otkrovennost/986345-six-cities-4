@@ -38,9 +38,6 @@ it(`Should Favorites component render correctly`, () => {
       citiesOffersList: CITIES_LIST,
       favoriteOffers: FAVORITE_OFFERS,
       isFavoriteOffersLoading: true
-    },
-    [NameSpace.USER]: {
-      isSignIn: true
     }
   });
 
@@ -49,6 +46,9 @@ it(`Should Favorites component render correctly`, () => {
         <BrowserRouter>
           <FavoritesPage
             loadFavoriteOffers={() => {}}
+            favoriteOffers={FAVORITE_OFFERS}
+            citiesOffersList={CITIES_LIST}
+            isFavoriteOffersLoading={true}
           />
         </BrowserRouter>
       </Provider>

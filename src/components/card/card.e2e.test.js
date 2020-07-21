@@ -1,7 +1,7 @@
 import React from "react";
 import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import {Card} from "./card.jsx";
+import Card from "./card.jsx";
 
 const offer = {
   id: 1,
@@ -19,27 +19,18 @@ Enzyme.configure({
 });
 
 describe(`Card`, () => {
-  it(`Should title be pressed and when user hovers the card with onMouseOver the handler should get information about the offer`, () => {
-    const onTitleClick = jest.fn();
+  it(`Should hovers the card with onMouseOver and onMouseOut work correctly`, () => {
     const onItemMouseOver = jest.fn();
     const onItemMouseOut = jest.fn();
 
     const card = shallow(
         <Card
           offer={offer}
-          onTitleClick={onTitleClick}
           onItemMouseOver={onItemMouseOver}
           onItemMouseOut={onItemMouseOut}
           cardClass={`cities`}
         />
     );
-
-    const title = card.find(`h2.place-card__name`);
-
-    title.simulate(`click`);
-
-    expect(onTitleClick).toHaveBeenCalledTimes(1);
-    expect(onTitleClick).toHaveBeenCalledWith(offer.id);
 
     card.find(`.place-card`).simulate(`mouseOver`);
 

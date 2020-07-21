@@ -23,3 +23,13 @@ export const getCurrentOffers = createSelector(
       return getSortedOffers(getOffersByCity(curCity, offers), sortType);
     }
 );
+
+const stateMock = (state) => state;
+
+export const getCurrentOffer = (id) => createSelector(
+    getOffers,
+    stateMock,
+    (offers) => {
+      return offers.find((offer) => offer.id === Number(id));
+    }
+);

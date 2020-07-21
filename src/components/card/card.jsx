@@ -1,12 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
 import {Link} from 'react-router-dom';
 import {CardClass} from "../../const.js";
-import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
-import {Operation as DataOperation} from "../../reducer/data/data.js";
 
-const Card = ({onTitleClick, offer, onItemMouseOver, onItemMouseOut, cardClass}) => {
+const Card = ({offer, onItemMouseOver, onItemMouseOut, cardClass}) => {
   const {id, title, price, type, rating, photo, isPremium, bookmark} = offer;
 
   const getCardClass = (currentClass) => {
@@ -70,11 +67,7 @@ const Card = ({onTitleClick, offer, onItemMouseOver, onItemMouseOut, cardClass})
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name"
-          onClick={
-            () => {
-              onTitleClick(id);
-            }}>
+        <h2 className="place-card__name">
           <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
@@ -82,17 +75,6 @@ const Card = ({onTitleClick, offer, onItemMouseOver, onItemMouseOut, cardClass})
     </article>
   );
 };
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: getAuthorizationStatus(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onTitleClick(id) {
-    dispatch(DataOperation.loadNearbyOffers(id));
-    dispatch(DataOperation.loadReviews(id));
-  }
-});
 
 Card.propTypes = {
   offer: PropTypes.shape({
@@ -107,9 +89,7 @@ Card.propTypes = {
   }),
   onItemMouseOver: PropTypes.func,
   onItemMouseOut: PropTypes.func,
-  onTitleClick: PropTypes.func,
-  cardClass: PropTypes.string,
-  authorizationStatus: PropTypes.string
+  cardClass: PropTypes.string
 };
-export {Card};
-export default connect(mapStateToProps, mapDispatchToProps)(Card);
+
+export default Card;
