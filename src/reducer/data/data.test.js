@@ -88,7 +88,6 @@ it(`Reducer should change city by a given value`, () => {
     currentSortType: `Popular`,
     isNearbyOffersLoading: true,
     isReviewsLoading: true,
-    isFavoriteOffersLoading: true,
     favoriteOffers: []
   }, {
     type: ActionType.CHANGE_CURRENT_CITY,
@@ -104,7 +103,6 @@ it(`Reducer should change city by a given value`, () => {
     currentSortType: `Popular`,
     isNearbyOffersLoading: true,
     isReviewsLoading: true,
-    isFavoriteOffersLoading: true,
     favoriteOffers: []
   });
 });
@@ -121,7 +119,6 @@ it(`Reducer should change sorting by a given value`, () => {
     currentSortType: `Popular`,
     isNearbyOffersLoading: true,
     isReviewsLoading: true,
-    isFavoriteOffersLoading: true,
     favoriteOffers: []
   }, {
     type: ActionType.CHANGE_SORT,
@@ -137,7 +134,6 @@ it(`Reducer should change sorting by a given value`, () => {
     currentSortType: `Top rated first`,
     isNearbyOffersLoading: true,
     isReviewsLoading: true,
-    isFavoriteOffersLoading: true,
     favoriteOffers: []
   });
 });
@@ -153,7 +149,6 @@ it(`Reducer should change activeOffer by a given value`, () => {
     currentSortType: `Popular`,
     isNearbyOffersLoading: true,
     isReviewsLoading: true,
-    isFavoriteOffersLoading: true,
     favoriteOffers: []
   }, {
     type: ActionType.CHANGE_ACTIVE_OFFER,
@@ -169,7 +164,6 @@ it(`Reducer should change activeOffer by a given value`, () => {
     currentSortType: `Popular`,
     isNearbyOffersLoading: true,
     isReviewsLoading: true,
-    isFavoriteOffersLoading: true,
     favoriteOffers: []
   });
 });

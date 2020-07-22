@@ -54,6 +54,7 @@ exports[`Should CardsList render correctly 1`] = `
         </div>
         <button
           className="place-card__bookmark-button place-card__bookmark-button--active button"
+          onClick={[Function]}
           type="button"
         >
           <svg
@@ -68,7 +69,7 @@ exports[`Should CardsList render correctly 1`] = `
           <span
             className="visually-hidden"
           >
-            In bookmarks
+            To bookmarks
           </span>
         </button>
       </div>
@@ -159,6 +160,7 @@ exports[`Should CardsList render correctly 1`] = `
         </div>
         <button
           className="place-card__bookmark-button button"
+          onClick={[Function]}
           type="button"
         >
           <svg
@@ -173,7 +175,7 @@ exports[`Should CardsList render correctly 1`] = `
           <span
             className="visually-hidden"
           >
-            In bookmarks
+            To bookmarks
           </span>
         </button>
       </div>
@@ -264,6 +266,7 @@ exports[`Should CardsList render correctly 1`] = `
         </div>
         <button
           className="place-card__bookmark-button button"
+          onClick={[Function]}
           type="button"
         >
           <svg
@@ -278,7 +281,7 @@ exports[`Should CardsList render correctly 1`] = `
           <span
             className="visually-hidden"
           >
-            In bookmarks
+            To bookmarks
           </span>
         </button>
       </div>

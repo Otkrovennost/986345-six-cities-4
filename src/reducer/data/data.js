@@ -11,7 +11,6 @@ const initialState = {
   currentSortType: SORT_TYPES.POPULAR,
   isNearbyOffersLoading: true,
   isReviewsLoading: true,
-  isFavoriteOffersLoading: true,
   favoriteOffers: [],
 };
 
@@ -102,8 +101,9 @@ export const Operation = {
       });
   },
   addToFavorite: (offer) => (dispatch, getState, api) => {
-    return api.post(`/favorite/${offer.id}/${+!offer.bookmark}`, {})
+    return api.post(`/favorite/${offer.id}/${+!offer.isFavorite}`, {})
       .then((response) => {
+        dispatch(Operation.loadFavoriteOffers());
         dispatch(ActionCreator.addToFavorite(response.data));
       });
   }
@@ -152,8 +152,7 @@ export const reducer = (state = initialState, action) => {
     case ActionType.LOAD_FAVORITE_OFFERS:
       let parsedFavoriteOffers = action.payload.map((offer) => parseOffer(offer));
       return extend(state, {
-        favoriteOffers: parsedFavoriteOffers,
-        isFavoriteOffersLoading: false
+        favoriteOffers: parsedFavoriteOffers
       });
     case ActionType.ADD_TO_FAVORITE:
       let parsedOffer = parseOffer(action.payload);

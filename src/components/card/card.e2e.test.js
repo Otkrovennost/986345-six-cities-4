@@ -32,12 +32,12 @@ describe(`Card`, () => {
         />
     );
 
-    card.find(`.place-card`).simulate(`mouseOver`);
+    card.simulate(`mouseOver`);
 
     expect(onItemMouseOver).toHaveBeenCalledTimes(1);
     expect(onItemMouseOver).toHaveBeenCalledWith(offer);
 
-    card.find(`.place-card`).simulate(`mouseOut`);
+    card.simulate(`mouseOut`);
     expect(onItemMouseOut).toHaveBeenCalledTimes(1);
   });
 });

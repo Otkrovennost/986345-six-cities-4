@@ -5,7 +5,7 @@ import Header from "../../header/header.jsx";
 import FavoritesEmpty from "../../favorites-empty/favorites-empty.jsx";
 import Card from "../../card/card.jsx";
 import {CardClass} from "../../../const.js";
-import {getFavoriteOffers, getCitiesOffersList, getFavoriteOffersStatus} from "../../../reducer/data/selectors.js";
+import {getFavoriteOffers, getCitiesOffersList} from "../../../reducer/data/selectors.js";
 import {Operation as DataOperation} from "../../../reducer/data/data.js";
 
 class FavoritesPage extends PureComponent {
@@ -19,11 +19,9 @@ class FavoritesPage extends PureComponent {
   }
 
   render() {
-    const {favoriteOffers, citiesOffersList, isFavoriteOffersLoading} = this.props;
+    const {favoriteOffers, citiesOffersList} = this.props;
 
-    if (isFavoriteOffersLoading) {
-      return false;
-    } else if (!favoriteOffers.length) {
+    if (!favoriteOffers.length) {
       return <FavoritesEmpty />;
     }
 
@@ -71,8 +69,7 @@ class FavoritesPage extends PureComponent {
 
 const mapStateToProps = (state) => ({
   favoriteOffers: getFavoriteOffers(state),
-  citiesOffersList: getCitiesOffersList(state),
-  isFavoriteOffersLoading: getFavoriteOffersStatus(state)
+  citiesOffersList: getCitiesOffersList(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -84,9 +81,7 @@ const mapDispatchToProps = (dispatch) => ({
 FavoritesPage.propTypes = {
   loadFavoriteOffers: PropTypes.func,
   favoriteOffers: PropTypes.array,
-  citiesOffersList: PropTypes.array,
-  isFavoriteOffersLoading: PropTypes.bool
+  citiesOffersList: PropTypes.array
 };
 
-export {FavoritesPage};
 export default connect(mapStateToProps, mapDispatchToProps)(FavoritesPage);

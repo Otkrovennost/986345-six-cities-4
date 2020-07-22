@@ -40,7 +40,7 @@ export const parseOffer = (data) => {
     type: data[`type`],
     photo: data[`preview_image`],
     isPremium: data[`is_premium`],
-    bookmark: data[`is_favorite`],
+    isFavorite: data[`is_favorite`],
     quantityBedrooms: data[`bedrooms`],
     maxAdults: data[`max_adults`],
     options: data[`goods`],

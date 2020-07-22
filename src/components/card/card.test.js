@@ -15,7 +15,7 @@ const offer = {
   rating: 4,
   photo: `img/apartment-01.jpg`,
   isPremium: false,
-  bookmark: true
+  isFavorite: true
 };
 
 it(`Should Card render correctly`, () => {

@@ -1,12 +1,13 @@
 import React from "react";
+import {BrowserRouter} from "react-router-dom";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import {BrowserRouter} from "react-router-dom";
+import thunk from 'redux-thunk';
 import NameSpace from "../../../reducer/name-space.js";
-import {FavoritesPage} from "./favorites-page.jsx";
+import {Operation} from '../../../reducer/data/data';
+import FavoritesPage from "./favorites-page.jsx";
 
-const mockStore = configureStore([]);
 const CITIES_LIST = [`Amsterdam`, `Paris`, `Cologne`, `Brussels`, `Hamburg`];
 const FAVORITE_OFFERS = [{
   id: 1,
@@ -19,7 +20,7 @@ const FAVORITE_OFFERS = [{
   type: `Apartment`,
   photo: `img/apartment-01.jpg`,
   isPremium: true,
-  bookmark: false,
+  isFavorite: false,
   quantityBedrooms: 3,
   maxAdults: 4,
   options: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
@@ -32,24 +33,29 @@ const FAVORITE_OFFERS = [{
   }
 }];
 
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+
+jest.mock(`../../../reducer/data/data`);
+Operation.loadFavoriteOffers = () => (dispatch) => dispatch(jest.fn());
+
 it(`Should Favorites component render correctly`, () => {
   const store = mockStore({
     [NameSpace.DATA]: {
       citiesOffersList: CITIES_LIST,
-      favoriteOffers: FAVORITE_OFFERS,
-      isFavoriteOffersLoading: true
+      favoriteOffers: FAVORITE_OFFERS
+    },
+    [NameSpace.USER]: {
+      authorizationStatus: `AUTH`,
+      email: `ab@mail.ru`,
+      isSignIn: true
     }
   });
 
   const tree = renderer.create(
       <Provider store={store}>
         <BrowserRouter>
-          <FavoritesPage
-            loadFavoriteOffers={() => {}}
-            favoriteOffers={FAVORITE_OFFERS}
-            citiesOffersList={CITIES_LIST}
-            isFavoriteOffersLoading={true}
-          />
+          <FavoritesPage />
         </BrowserRouter>
       </Provider>
   )

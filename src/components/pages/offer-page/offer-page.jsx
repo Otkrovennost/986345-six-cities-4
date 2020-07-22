@@ -1,21 +1,18 @@
 import React, {PureComponent} from "react";
 import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
 import PropTypes from "prop-types";
 import ReviewsList from "../../reviews-list/reviews-list.jsx";
 import Map from "../../map/map.jsx";
 import CardsList from "../../cards-list/cards-list.jsx";
 import Header from "../../header/header.jsx";
-import {CardClass, AppRoute} from "../../../const.js";
+import {CardClass, ButtonCardClass} from "../../../const.js";
 import {getNearbyOffers, getReviews, getNearbyOffersStatus, getReviewsStatus, getCurrentOffer} from "../../../reducer/data/selectors.js";
 import {Operation as DataOperation} from "../../../reducer/data/data.js";
-import {getSignInStatus} from "../../../reducer/user/selectors.js";
+import ButtonFavorite from "../../button-favorite/button-favorite.jsx";
 
 class OfferPage extends PureComponent {
   constructor(props) {
     super(props);
-
-    this._onFavoriteClick = this._onFavoriteClick.bind(this);
   }
 
   componentDidMount() {
@@ -31,16 +28,6 @@ class OfferPage extends PureComponent {
     }
   }
 
-  _onFavoriteClick() {
-    const {history, onFavoriteButtonClick, isSignIn, offer} = this.props;
-    if (!isSignIn) {
-      return history.push(AppRoute.SIGN_IN);
-    }
-
-    onFavoriteButtonClick(offer);
-    return false;
-  }
-
   render() {
     const {offer, nearbyOffers, reviews, isNearbyOffersLoading, isReviewsLoading} = this.props;
 
@@ -48,7 +35,7 @@ class OfferPage extends PureComponent {
       return false;
     }
 
-    const {title, description, price, rating, type, isPremium, bookmark, quantityBedrooms, maxAdults, options, images, host} = offer;
+    const {title, description, price, rating, type, isPremium, isFavorite, quantityBedrooms, maxAdults, options, images, host} = offer;
 
     const ratingPercentage = `${rating * 20}%`;
     const premiumClass = isPremium ? `property__mark` : `property__mark visually-hidden`;
@@ -77,12 +64,11 @@ class OfferPage extends PureComponent {
                 </div>
                 <div className="property__name-wrapper">
                   <h1 className="property__name">{title}</h1>
-                  <button className={`property__bookmark-button button ${bookmark ? `property__bookmark-button--active` : ``}`} type="button" onClick={this._onFavoriteClick}>
-                    <svg className="property__bookmark-icon" width="31" height="33">
-                      <use xlinkHref="#icon-bookmark"></use>
-                    </svg>
-                    <span className="visually-hidden">To bookmarks</span>
-                  </button>
+                  <ButtonFavorite
+                    isFavorite={isFavorite}
+                    offer={offer}
+                    className={ButtonCardClass.PROPERTY}
+                  />
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
@@ -208,8 +194,7 @@ const mapStateToProps = (state, {offerId}) => ({
   nearbyOffers: getNearbyOffers(state),
   reviews: getReviews(state),
   isNearbyOffersLoading: getNearbyOffersStatus(state),
-  isReviewsLoading: getReviewsStatus(state),
-  isSignIn: getSignInStatus(state),
+  isReviewsLoading: getReviewsStatus(state)
 });
 
 
@@ -217,10 +202,7 @@ const mapDispatchToProps = (dispatch) => ({
   loadOfferData(id) {
     dispatch(DataOperation.loadNearbyOffers(id));
     dispatch(DataOperation.loadReviews(id));
-  },
-  onFavoriteButtonClick(offer) {
-    dispatch(DataOperation.addToFavorite(offer));
-  },
+  }
 });
 
 OfferPage.propTypes = {
@@ -231,7 +213,7 @@ OfferPage.propTypes = {
     type: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
     isPremium: PropTypes.bool.isRequired,
-    bookmark: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
     quantityBedrooms: PropTypes.number.isRequired,
     maxAdults: PropTypes.number.isRequired,
     options: PropTypes.array.isRequired,
@@ -242,16 +224,13 @@ OfferPage.propTypes = {
       name: PropTypes.string.isRequired
     })
   }),
-  offers: PropTypes.array,
   reviews: PropTypes.array.isRequired,
   nearbyOffers: PropTypes.array.isRequired,
   isNearbyOffersLoading: PropTypes.bool.isRequired,
   isReviewsLoading: PropTypes.bool.isRequired,
   loadOfferData: PropTypes.func,
   onFavoriteButtonClick: PropTypes.func,
-  isSignIn: PropTypes.bool.isRequired,
-  offerId: PropTypes.string,
-  history: PropTypes.object
+  offerId: PropTypes.string
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(OfferPage));
+export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);

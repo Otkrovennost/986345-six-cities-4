@@ -13,7 +13,6 @@ export const getSortListIsOpen = (state) => state[NameSpace.DATA].sortListIsOpen
 export const getReviewsStatus = (state) => state[NameSpace.DATA].isReviewsLoading;
 export const getNearbyOffersStatus = (state) => state[NameSpace.DATA].isNearbyOffersLoading;
 export const getFavoriteOffers = (state) => state[NameSpace.DATA].favoriteOffers;
-export const getFavoriteOffersStatus = (state) => state[NameSpace.DATA].isFavoriteOffersLoading;
 
 export const getCurrentOffers = createSelector(
     getCurrentCity,

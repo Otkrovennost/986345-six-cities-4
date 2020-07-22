@@ -12,3 +12,8 @@ export const AppRoute = {
   ROOM: `/offer/:id`,
   MAIN: `/`,
 };
+
+export const ButtonCardClass = {
+  PLACE_CARD: `place-card`,
+  PROPERTY: `property`
+};
