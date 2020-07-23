@@ -28,6 +28,7 @@ it(`Should Map render correctly`, () => {
           <Map
             offers={CURRENT_OFFERS}
             currentItem={CURRENT_OFFERS[0]}
+            activeOffer={CURRENT_OFFERS[1]}
           />
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)

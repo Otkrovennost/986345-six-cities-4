@@ -1,6 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
+import {BrowserRouter} from "react-router-dom";
 import configureStore from "redux-mock-store";
 import {getOffersByCity, getSortedOffers} from "../../../utils/utils";
 import NameSpace from "../../../reducer/name-space.js";
@@ -20,7 +21,7 @@ const CURRENT_OFFERS = [
     type: `Apartment`,
     photo: `img/apartment-01.jpg`,
     isPremium: true,
-    bookmark: false,
+    isFavorite: false,
     quantityBedrooms: 3,
     maxAdults: 4,
     options: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
@@ -44,7 +45,7 @@ const CURRENT_OFFERS = [
     type: `Private room`,
     photo: `img/room.jpg`,
     isPremium: false,
-    bookmark: true,
+    isFavorite: true,
     quantityBedrooms: 2,
     maxAdults: 3,
     options: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`],
@@ -67,7 +68,7 @@ const CURRENT_OFFERS = [
     type: `Apartment`,
     photo: `img/apartment-02.jpg`,
     isPremium: false,
-    bookmark: false,
+    isFavorite: false,
     quantityBedrooms: 3,
     maxAdults: 5,
     options: [`Wi-Fi`, `Towels`, `Heating`, `Coffee machine`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
@@ -100,11 +101,13 @@ it(`Should Main render correctly`, () => {
   const tree = renderer
     .create(
         <Provider store={store}>
-          <MainPage
-            onTitleClick={() => {}}
-            onItemMouseOver={() => {}}
-            onItemMouseOut={() => {}}
-          />
+          <BrowserRouter >
+            <MainPage
+              onTitleClick={() => {}}
+              onItemMouseOver={() => {}}
+              onItemMouseOut={() => {}}
+            />
+          </BrowserRouter>
         </Provider>, {
           createNodeMock: () => document.createElement(`div`)
         }

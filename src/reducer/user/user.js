@@ -1,3 +1,5 @@
+import {extend} from "../../utils/utils";
+
 export const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
@@ -5,12 +7,14 @@ export const AuthorizationStatus = {
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  email: ``
+  email: ``,
+  isSignIn: false
 };
 
 export const ActionType = {
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
-  AUTHORIZATION_DATA: `AUTHORIZATION_DATA`
+  AUTHORIZATION_DATA: `AUTHORIZATION_DATA`,
+  SIGN_IN: `SIGN_IN`
 };
 
 export const ActionCreator = {
@@ -25,6 +29,12 @@ export const ActionCreator = {
       type: ActionType.AUTHORIZATION_DATA,
       payload: data
     };
+  },
+  signingIn: () => {
+    return {
+      type: ActionType.SIGN_IN,
+      payload: null,
+    };
   }
 };
 
@@ -38,6 +48,10 @@ export const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         email: action.payload.data.email
       });
+    case ActionType.SIGN_IN:
+      return extend(state, {
+        isSignIn: true,
+      });
   }
 
   return state;
@@ -49,6 +63,7 @@ export const Operation = {
       .then((data) => {
         dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
         dispatch(ActionCreator.authorizationData(data));
+        dispatch(ActionCreator.signingIn());
       })
       .catch((err) => {
         throw err;
@@ -63,6 +78,7 @@ export const Operation = {
       .then((data) => {
         dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
         dispatch(ActionCreator.authorizationData(data));
+        dispatch(ActionCreator.signingIn());
       });
   },
 };

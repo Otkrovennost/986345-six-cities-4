@@ -1,73 +1,43 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
+import {Switch, Route, BrowserRouter, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
-import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MainPage from "../pages/main-page/main-page.jsx";
 import OfferPage from "../pages/offer-page/offer-page.jsx";
-import {Operation as DataOperation} from "../../reducer/data/data.js";
-import {getActiveOffer} from "../../reducer/data/selectors.js";
 import SignInPage from "../pages/sign-in-page/sign-in-page.jsx";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
+import FavoritesPage from "../pages/favorites-page/favorites-page.jsx";
+import {AppRoute} from "../../const.js";
+import {getSignInStatus} from "../../reducer/user/selectors.js";
+import withPrivateRoute from "../../hocs/with-private-route/with-private-route.js";
 
-class App extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+const App = ({isSignIn}) => {
+  const FavoritesPagePrivate = withPrivateRoute(FavoritesPage, isSignIn, `/login`);
 
-  _renderApp() {
-    const {activeOffer, onTitleClick, authorizationStatus} = this.props;
-    if (activeOffer) {
-      return (
-        <OfferPage
-          offer={activeOffer}
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path={AppRoute.MAIN} component={MainPage} />
+        <Route exact path={AppRoute.SIGN_IN} component={SignInPage}/>
+        <Route exact path={AppRoute.FAVORITES} component={FavoritesPagePrivate}/>
+        <Route exact path={AppRoute.ROOM}
+          render={({match}) => {
+            const {id} = match.params;
+            return <OfferPage offerId={id} />;
+          }}
         />
-      );
-    }
+        <Redirect to={AppRoute.MAIN} />
+      </Switch>
+    </BrowserRouter>
+  );
+};
 
-    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      return (
-        <SignInPage />
-      );
-    }
-
-    return (
-      <MainPage
-        onTitleClick={onTitleClick}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            {this._renderApp()}
-          </Route>
-          <Route exact path="/dev-auth">
-            <SignInPage />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    );
-  }
-}
 const mapStateToProps = (state) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-  activeOffer: getActiveOffer(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onTitleClick(offer) {
-    dispatch(DataOperation.changeOffer(offer));
-  }
+  isSignIn: getSignInStatus(state)
 });
 
 App.propTypes = {
-  activeOffer: PropTypes.object,
-  onTitleClick: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired
+  isSignIn: PropTypes.bool
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+export default connect(mapStateToProps)(App);

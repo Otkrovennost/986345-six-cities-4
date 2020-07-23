@@ -10,7 +10,7 @@ import {getCurrentOffers, getCitiesOffersList} from "../../../reducer/data/selec
 import Sorting from "../../sorting/sorting.jsx";
 import withActiveItem from "../../../hocs/with-active-item/with-active-item.js";
 
-const MainPage = ({onTitleClick, currentCity, citiesOffersList, currentOffers, currentItem, onItemMouseOver, onItemMouseOut}) => {
+const MainPage = ({currentCity, citiesOffersList, currentOffers, currentItem, onItemMouseOver, onItemMouseOut}) => {
   const mainClass = currentOffers.length > 0 ? `page__main page__main--index` : `page__main page__main--index page__main--index-empty`;
 
   return (
@@ -32,7 +32,7 @@ const MainPage = ({onTitleClick, currentCity, citiesOffersList, currentOffers, c
                   <h2 className="visually-hidden">Places</h2>
                   <b className="places__found">{currentOffers.length} places to stay in {currentCity}</b>
                   <Sorting/>
-                  <CardsList offers={currentOffers} onTitleClick={onTitleClick} onItemMouseOver={onItemMouseOver} onItemMouseOut={onItemMouseOut} cardClass={CardClass.CITIES}/>
+                  <CardsList offers={currentOffers} onItemMouseOver={onItemMouseOver} onItemMouseOut={onItemMouseOut} cardClass={CardClass.CITIES}/>
                 </section>
                 <div className="cities__right-section">
                   <section className="cities__map map">
@@ -66,7 +66,6 @@ const mapStateToProps = (state) => ({
 
 MainPage.propTypes = {
   currentCity: PropTypes.string,
-  onTitleClick: PropTypes.func.isRequired,
   currentItem: PropTypes.object.isRequired,
   onItemMouseOver: PropTypes.func.isRequired,
   onItemMouseOut: PropTypes.func.isRequired,

@@ -1,172 +1,208 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import ReviewsList from "../../reviews-list/reviews-list.jsx";
 import Map from "../../map/map.jsx";
 import CardsList from "../../cards-list/cards-list.jsx";
 import Header from "../../header/header.jsx";
-import {CardClass} from "../../../const.js";
-import {getNearbyOffers, getReviews} from "../../../reducer/data/selectors.js";
+import {CardClass, ButtonCardClass} from "../../../const.js";
+import {getNearbyOffers, getReviews, getNearbyOffersStatus, getReviewsStatus, getCurrentOffer} from "../../../reducer/data/selectors.js";
+import {Operation as DataOperation} from "../../../reducer/data/data.js";
+import ButtonFavorite from "../../button-favorite/button-favorite.jsx";
 
-const OfferPage = ({offer, nearbyOffers, reviews}) => {
+class OfferPage extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
 
+  componentDidMount() {
+    const {offerId, loadOfferData} = this.props;
+    loadOfferData(offerId);
+  }
 
-  const {title, description, price, rating, type, isPremium, quantityBedrooms, maxAdults, options, images, host} = offer;
+  componentDidUpdate(prevProps) {
+    const {offerId, loadOfferData} = this.props;
 
-  const ratingPercentage = `${rating * 20}%`;
-  const premiumClass = isPremium ? `property__mark` : `property__mark visually-hidden`;
+    if (this.props.offerId !== prevProps.offerId) {
+      loadOfferData(offerId);
+    }
+  }
 
-  return (
-    <div className="page">
-      <Header />
-      <main className="page__main page__main--property">
-        <section className="property">
-          <div className="property__gallery-container container">
-            <div className="property__gallery">
-              {images.map((image, index) => {
-                return (
-                  <div className="property__image-wrapper" key={index}>
-                    <img className="property__image" src={image} alt="Photo studio" />
-                  </div>
-                );
-              }).slice(0, 6)
-              }
+  render() {
+    const {offer, nearbyOffers, reviews, isNearbyOffersLoading, isReviewsLoading} = this.props;
+
+    if (isReviewsLoading || isNearbyOffersLoading) {
+      return false;
+    }
+
+    const {title, description, price, rating, type, isPremium, isFavorite, quantityBedrooms, maxAdults, options, images, host} = offer;
+
+    const ratingPercentage = `${rating * 20}%`;
+    const premiumClass = isPremium ? `property__mark` : `property__mark visually-hidden`;
+
+    return (
+      <div className="page">
+        <Header />
+        <main className="page__main page__main--property">
+          <section className="property">
+            <div className="property__gallery-container container">
+              <div className="property__gallery">
+                {images.map((image, index) => {
+                  return (
+                    <div className="property__image-wrapper" key={index}>
+                      <img className="property__image" src={image} alt="Photo studio" />
+                    </div>
+                  );
+                }).slice(0, 6)
+                }
+              </div>
             </div>
-          </div>
-          <div className="property__container container">
-            <div className="property__wrapper">
-              <div className={premiumClass}>
-                <span>Premium</span>
-              </div>
-              <div className="property__name-wrapper">
-                <h1 className="property__name">{title}</h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
-              </div>
-              <div className="property__rating rating">
-                <div className="property__stars rating__stars">
-                  <span style={{width: ratingPercentage}}></span>
-                  <span className="visually-hidden">Rating</span>
+            <div className="property__container container">
+              <div className="property__wrapper">
+                <div className={premiumClass}>
+                  <span>Premium</span>
                 </div>
-                <span className="property__rating-value rating__value">{rating}</span>
-              </div>
-              <ul className="property__features">
-                <li className="property__feature property__feature--entire">
-                  {type}
-                </li>
-                <li className="property__feature property__feature--bedrooms">
-                  {quantityBedrooms} Bedrooms
-                </li>
-                <li className="property__feature property__feature--adults">
-                  Max {maxAdults} adults
-                </li>
-              </ul>
-              <div className="property__price">
-                <b className="property__price-value">&euro;{price}</b>
-                <span className="property__price-text">&nbsp;night</span>
-              </div>
-              <div className="property__inside">
-                <h2 className="property__inside-title">What&apos;s inside</h2>
-                <ul className="property__inside-list">
-                  {options.map((option, i) => {
-                    return (<li className="property__inside-item" key={`option-${i}`}>
-                      {option}
-                    </li>);
-                  })}
+                <div className="property__name-wrapper">
+                  <h1 className="property__name">{title}</h1>
+                  <ButtonFavorite
+                    isFavorite={isFavorite}
+                    offer={offer}
+                    className={ButtonCardClass.PROPERTY}
+                  />
+                </div>
+                <div className="property__rating rating">
+                  <div className="property__stars rating__stars">
+                    <span style={{width: ratingPercentage}}></span>
+                    <span className="visually-hidden">Rating</span>
+                  </div>
+                  <span className="property__rating-value rating__value">{rating}</span>
+                </div>
+                <ul className="property__features">
+                  <li className="property__feature property__feature--entire">
+                    {type}
+                  </li>
+                  <li className="property__feature property__feature--bedrooms">
+                    {quantityBedrooms} Bedrooms
+                  </li>
+                  <li className="property__feature property__feature--adults">
+                    Max {maxAdults} adults
+                  </li>
                 </ul>
-              </div>
-              <div className="property__host">
-                <h2 className="property__host-title">Meet the host</h2>
-                <div className="property__host-user user">
-                  <div className={`property__avatar-wrapper ${host.isSuper ? `property__avatar-wrapper--pro` : ``} user__avatar-wrapper`}>
-                    <img className="property__avatar user__avatar" src={`/` + host.avatarUrl} width="74" height="74" alt="Host avatar" />
-                  </div>
-                  <span className="property__user-name">
-                    {host.name}
-                  </span>
+                <div className="property__price">
+                  <b className="property__price-value">&euro;{price}</b>
+                  <span className="property__price-text">&nbsp;night</span>
                 </div>
-                <div className="property__description">
-                  <p className="property__text">
-                    {description}
-                  </p>
+                <div className="property__inside">
+                  <h2 className="property__inside-title">What&apos;s inside</h2>
+                  <ul className="property__inside-list">
+                    {options.map((option, i) => {
+                      return (<li className="property__inside-item" key={`option-${i}`}>
+                        {option}
+                      </li>);
+                    })}
+                  </ul>
                 </div>
-              </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewsList reviews={reviews} />
-                <form className="reviews__form form" action="#" method="post">
-                  <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                  <div className="reviews__rating-form form__rating">
-                    <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"/>
-                    <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio"/>
-                    <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio"/>
-                    <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio"/>
-                    <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio"/>
-                    <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
+                <div className="property__host">
+                  <h2 className="property__host-title">Meet the host</h2>
+                  <div className="property__host-user user">
+                    <div className={`property__avatar-wrapper ${host.isSuper ? `property__avatar-wrapper--pro` : ``} user__avatar-wrapper`}>
+                      <img className="property__avatar user__avatar" src={`/` + host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                    </div>
+                    <span className="property__user-name">
+                      {host.name}
+                    </span>
                   </div>
-                  <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                  <div className="reviews__button-wrapper">
-                    <p className="reviews__help">
-                      To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+                  <div className="property__description">
+                    <p className="property__text">
+                      {description}
                     </p>
-                    <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
                   </div>
-                </form>
-              </section>
-            </div>
-          </div>
-          <section className="property__map map">
-            <Map
-              offers={nearbyOffers}
-            />
-          </section>
-        </section>
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CardsList offers={nearbyOffers} cardClass={CardClass.NEAR_PLACES}/>
-          </section>
-        </div>
-      </main>
-    </div>
-  );
-};
+                </div>
+                <section className="property__reviews reviews">
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                  <ReviewsList reviews={reviews} />
+                  <form className="reviews__form form" action="#" method="post">
+                    <label className="reviews__label form__label" htmlFor="review">Your review</label>
+                    <div className="reviews__rating-form form__rating">
+                      <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"/>
+                      <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
+                        <svg className="form__star-image" width="37" height="33">
+                          <use xlinkHref="#icon-star"></use>
+                        </svg>
+                      </label>
 
-const mapStateToProps = (state) => ({
+                      <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio"/>
+                      <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
+                        <svg className="form__star-image" width="37" height="33">
+                          <use xlinkHref="#icon-star"></use>
+                        </svg>
+                      </label>
+
+                      <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio"/>
+                      <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
+                        <svg className="form__star-image" width="37" height="33">
+                          <use xlinkHref="#icon-star"></use>
+                        </svg>
+                      </label>
+
+                      <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio"/>
+                      <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
+                        <svg className="form__star-image" width="37" height="33">
+                          <use xlinkHref="#icon-star"></use>
+                        </svg>
+                      </label>
+
+                      <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio"/>
+                      <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
+                        <svg className="form__star-image" width="37" height="33">
+                          <use xlinkHref="#icon-star"></use>
+                        </svg>
+                      </label>
+                    </div>
+                    <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+                    <div className="reviews__button-wrapper">
+                      <p className="reviews__help">
+                        To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+                      </p>
+                      <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+                    </div>
+                  </form>
+                </section>
+              </div>
+            </div>
+            <section className="property__map map">
+              <Map
+                offers={nearbyOffers}
+                activeOffer={offer}
+              />
+            </section>
+          </section>
+          <div className="container">
+            <section className="near-places places">
+              <h2 className="near-places__title">Other places in the neighbourhood</h2>
+              <CardsList offers={nearbyOffers} cardClass={CardClass.NEAR_PLACES} />
+            </section>
+          </div>
+        </main>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state, {offerId}) => ({
+  offer: getCurrentOffer(offerId)(state),
   nearbyOffers: getNearbyOffers(state),
-  reviews: getReviews(state)
+  reviews: getReviews(state),
+  isNearbyOffersLoading: getNearbyOffersStatus(state),
+  isReviewsLoading: getReviewsStatus(state)
+});
+
+
+const mapDispatchToProps = (dispatch) => ({
+  loadOfferData(id) {
+    dispatch(DataOperation.loadNearbyOffers(id));
+    dispatch(DataOperation.loadReviews(id));
+  }
 });
 
 OfferPage.propTypes = {
@@ -177,6 +213,7 @@ OfferPage.propTypes = {
     type: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
     isPremium: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
     quantityBedrooms: PropTypes.number.isRequired,
     maxAdults: PropTypes.number.isRequired,
     options: PropTypes.array.isRequired,
@@ -189,6 +226,11 @@ OfferPage.propTypes = {
   }),
   reviews: PropTypes.array.isRequired,
   nearbyOffers: PropTypes.array.isRequired,
+  isNearbyOffersLoading: PropTypes.bool.isRequired,
+  isReviewsLoading: PropTypes.bool.isRequired,
+  loadOfferData: PropTypes.func,
+  onFavoriteButtonClick: PropTypes.func,
+  offerId: PropTypes.string
 };
 
-export default connect(mapStateToProps)(OfferPage);
+export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);

@@ -18,12 +18,14 @@ exports[`Render App 1`] = `
         >
           <a
             className="header__logo-link header__logo-link--active"
+            href="/"
+            onClick={[Function]}
           >
             <img
               alt="6 cities logo"
               className="header__logo"
               height="41"
-              src="img/logo.svg"
+              src="../img/logo.svg"
               width="81"
             />
           </a>
@@ -39,7 +41,8 @@ exports[`Render App 1`] = `
             >
               <a
                 className="header__nav-link header__nav-link--profile"
-                href="#"
+                href="/favorites"
+                onClick={[Function]}
               >
                 <div
                   className="header__avatar-wrapper user__avatar-wrapper"
@@ -255,7 +258,7 @@ exports[`Render App 1`] = `
                 </a>
               </div>
               <div
-                className="place-card__info"
+                className=" place-card__info"
               >
                 <div
                   className="place-card__price-wrapper"
@@ -277,6 +280,7 @@ exports[`Render App 1`] = `
                   </div>
                   <button
                     className="place-card__bookmark-button button"
+                    onClick={[Function]}
                     type="button"
                   >
                     <svg
@@ -291,7 +295,7 @@ exports[`Render App 1`] = `
                     <span
                       className="visually-hidden"
                     >
-                      In bookmarks
+                      To bookmarks
                     </span>
                   </button>
                 </div>
@@ -317,10 +321,10 @@ exports[`Render App 1`] = `
                 </div>
                 <h2
                   className="place-card__name"
-                  onClick={[Function]}
                 >
                   <a
-                    href="#"
+                    href="/offer/1"
+                    onClick={[Function]}
                   >
                     Beautiful & luxurious apartment at great location
                   </a>
@@ -360,7 +364,7 @@ exports[`Render App 1`] = `
                 </a>
               </div>
               <div
-                className="place-card__info"
+                className=" place-card__info"
               >
                 <div
                   className="place-card__price-wrapper"
@@ -382,6 +386,7 @@ exports[`Render App 1`] = `
                   </div>
                   <button
                     className="place-card__bookmark-button place-card__bookmark-button--active button"
+                    onClick={[Function]}
                     type="button"
                   >
                     <svg
@@ -396,7 +401,7 @@ exports[`Render App 1`] = `
                     <span
                       className="visually-hidden"
                     >
-                      In bookmarks
+                      To bookmarks
                     </span>
                   </button>
                 </div>
@@ -422,10 +427,10 @@ exports[`Render App 1`] = `
                 </div>
                 <h2
                   className="place-card__name"
-                  onClick={[Function]}
                 >
                   <a
-                    href="#"
+                    href="/offer/2"
+                    onClick={[Function]}
                   >
                     Wood and stone place
                   </a>
@@ -465,7 +470,7 @@ exports[`Render App 1`] = `
                 </a>
               </div>
               <div
-                className="place-card__info"
+                className=" place-card__info"
               >
                 <div
                   className="place-card__price-wrapper"
@@ -487,6 +492,7 @@ exports[`Render App 1`] = `
                   </div>
                   <button
                     className="place-card__bookmark-button button"
+                    onClick={[Function]}
                     type="button"
                   >
                     <svg
@@ -501,7 +507,7 @@ exports[`Render App 1`] = `
                     <span
                       className="visually-hidden"
                     >
-                      In bookmarks
+                      To bookmarks
                     </span>
                   </button>
                 </div>
@@ -527,10 +533,10 @@ exports[`Render App 1`] = `
                 </div>
                 <h2
                   className="place-card__name"
-                  onClick={[Function]}
                 >
                   <a
-                    href="#"
+                    href="/offer/3"
+                    onClick={[Function]}
                   >
                     Canal View Prinsengracht
                   </a>

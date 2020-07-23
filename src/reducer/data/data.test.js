@@ -85,7 +85,10 @@ it(`Reducer should change city by a given value`, () => {
     currentCity: `Amsterdam`,
     citiesOffersList,
     sortListIsOpen: false,
-    currentSortType: `Popular`
+    currentSortType: `Popular`,
+    isNearbyOffersLoading: true,
+    isReviewsLoading: true,
+    favoriteOffers: []
   }, {
     type: ActionType.CHANGE_CURRENT_CITY,
     payload: `Paris`,
@@ -97,7 +100,10 @@ it(`Reducer should change city by a given value`, () => {
     currentCity: `Paris`,
     citiesOffersList,
     sortListIsOpen: false,
-    currentSortType: `Popular`
+    currentSortType: `Popular`,
+    isNearbyOffersLoading: true,
+    isReviewsLoading: true,
+    favoriteOffers: []
   });
 });
 
@@ -110,7 +116,10 @@ it(`Reducer should change sorting by a given value`, () => {
     currentCity: `Amsterdam`,
     citiesOffersList,
     sortListIsOpen: false,
-    currentSortType: `Popular`
+    currentSortType: `Popular`,
+    isNearbyOffersLoading: true,
+    isReviewsLoading: true,
+    favoriteOffers: []
   }, {
     type: ActionType.CHANGE_SORT,
     payload: `Top rated first`,
@@ -123,6 +132,9 @@ it(`Reducer should change sorting by a given value`, () => {
     citiesOffersList,
     sortListIsOpen: false,
     currentSortType: `Top rated first`,
+    isNearbyOffersLoading: true,
+    isReviewsLoading: true,
+    favoriteOffers: []
   });
 });
 it(`Reducer should change activeOffer by a given value`, () => {
@@ -134,7 +146,10 @@ it(`Reducer should change activeOffer by a given value`, () => {
     currentCity: `Amsterdam`,
     citiesOffersList,
     sortListIsOpen: false,
-    currentSortType: `Popular`
+    currentSortType: `Popular`,
+    isNearbyOffersLoading: true,
+    isReviewsLoading: true,
+    favoriteOffers: []
   }, {
     type: ActionType.CHANGE_ACTIVE_OFFER,
     payload: offers[0],
@@ -147,6 +162,9 @@ it(`Reducer should change activeOffer by a given value`, () => {
     citiesOffersList,
     sortListIsOpen: false,
     currentSortType: `Popular`,
+    isNearbyOffersLoading: true,
+    isReviewsLoading: true,
+    favoriteOffers: []
   });
 });
 
