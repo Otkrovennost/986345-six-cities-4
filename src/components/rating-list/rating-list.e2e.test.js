@@ -8,11 +8,11 @@ Enzyme.configure({
 });
 
 it(`Should item from RatingList be pressed and checked correct value`, () => {
-  const onChangeRating = jest.fn();
+  const onChange = jest.fn();
 
   const ratingList = shallow(
       <RatingList
-        onChangeRating={onChangeRating}
+        onChange={onChange}
         rating={`5`}
       />
   );
@@ -26,6 +26,6 @@ it(`Should item from RatingList be pressed and checked correct value`, () => {
 
   ratingInput.simulate(`change`, event);
 
-  expect(onChangeRating).toHaveBeenCalledTimes(1);
-  expect(onChangeRating).toHaveBeenCalledWith(`This is just for test`);
+  expect(onChange).toHaveBeenCalledTimes(1);
+  expect(onChange).toHaveBeenCalledWith({target: {value: `This is just for test`}}, `This is just for test`);
 });

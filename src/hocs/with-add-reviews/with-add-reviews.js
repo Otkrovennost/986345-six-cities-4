@@ -15,30 +15,19 @@ const withAddReviews = (Component) => {
       };
 
       this.onSubmitForm = this.onSubmitForm.bind(this);
-      this.onChangeRating = this.onChangeRating.bind(this);
-      this.onChangeReview = this.onChangeReview.bind(this);
+      this.onChange = this.onChange.bind(this);
     }
 
     onSubmitForm() {
       const {uploadReviews, offerId} = this.props;
       const {rating, review} = this.state;
       uploadReviews(rating, review, offerId);
-      this.setState(
-          {
-            rating: null,
-            review: ``,
-            isActiveSubmit: false
-          }
-      );
+      this.clearState();
     }
 
-    onChangeRating(value) {
-      this.setState({rating: value});
-      this.activeForm();
-    }
-
-    onChangeReview(value) {
-      this.setState({review: value});
+    onChange(evt, value) {
+      const target = evt.target.name;
+      this.setState({[target]: value});
       this.activeForm();
     }
 
@@ -50,14 +39,23 @@ const withAddReviews = (Component) => {
       }
     }
 
+    clearState() {
+      this.setState(
+          {
+            rating: null,
+            review: ``,
+            isActiveSubmit: false
+          }
+      );
+    }
+
     render() {
       return (
         <Component
           {...this.props}
           onSubmitForm={this.onSubmitForm}
           isActiveSubmit={this.state.isActiveSubmit}
-          onChangeRating={this.onChangeRating}
-          onChangeReview={this.onChangeReview}
+          onChange={this.onChange}
           rating={this.state.rating}
         />
       );

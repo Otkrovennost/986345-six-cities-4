@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import RatingList from "../rating-list/rating-list.jsx";
 
-const ReviewsForm = ({onSubmitForm, isActiveSubmit, onChangeRating, onChangeReview, rating}) => {
+const ReviewsForm = ({onSubmitForm, isActiveSubmit, onChange, rating}) => {
   return (
     <form
       onSubmit={(evt) => {
@@ -14,11 +14,11 @@ const ReviewsForm = ({onSubmitForm, isActiveSubmit, onChangeRating, onChangeRevi
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <RatingList
         rating={rating}
-        onChangeRating={onChangeRating}
+        onChange={onChange}
       />
       <textarea
         onChange={(evt) => {
-          onChangeReview(evt.target.value);
+          onChange(evt, evt.target.value);
         }}
         className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" minLength="50" maxLength="300" required></textarea>
       <div className="reviews__button-wrapper">
@@ -36,6 +36,7 @@ ReviewsForm.propTypes = {
   isActiveSubmit: PropTypes.bool,
   onChangeRating: PropTypes.func,
   onChangeReview: PropTypes.func,
+  onChange: PropTypes.func,
   rating: PropTypes.string
 };
 
