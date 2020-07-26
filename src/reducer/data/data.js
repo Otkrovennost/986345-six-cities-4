@@ -73,6 +73,10 @@ export const ActionCreator = {
       payload: favoriteOffers
     };
   },
+  uploadReviews: (review) => ({
+    type: ActionType.CHANGE_COMMENT,
+    payload: review
+  }),
 };
 
 export const Operation = {
@@ -105,6 +109,19 @@ export const Operation = {
       .then((response) => {
         dispatch(Operation.loadFavoriteOffers());
         dispatch(ActionCreator.addToFavorite(response.data));
+      });
+  },
+  uploadReviews: (rating, review, offerId) => (dispatch, getState, api) => {
+    return api.post(`/comments/${offerId}`,
+        {
+          comment: review,
+          rating
+        }
+    )
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch(Operation.loadReviews(offerId));
+        }
       });
   }
 };
