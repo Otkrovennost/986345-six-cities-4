@@ -67,6 +67,12 @@ class FavoritesPage extends PureComponent {
   }
 }
 
+FavoritesPage.propTypes = {
+  loadFavoriteOffers: PropTypes.func,
+  favoriteOffers: PropTypes.array,
+  citiesOffersList: PropTypes.array
+};
+
 const mapStateToProps = (state) => ({
   favoriteOffers: getFavoriteOffers(state),
   citiesOffersList: getCitiesOffersList(state)
@@ -77,11 +83,5 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataOperation.loadFavoriteOffers());
   }
 });
-
-FavoritesPage.propTypes = {
-  loadFavoriteOffers: PropTypes.func,
-  favoriteOffers: PropTypes.array,
-  citiesOffersList: PropTypes.array
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(FavoritesPage);

@@ -3,6 +3,11 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 
+const ValidReviewLength = {
+  MIN_LENGTH: 50,
+  MAX_LENGTH: 300,
+};
+
 const withAddReviews = (Component) => {
   class WithAddReviews extends PureComponent {
     constructor(props) {
@@ -11,42 +16,59 @@ const withAddReviews = (Component) => {
       this.state = {
         rating: null,
         review: ``,
-        isActiveSubmit: false
+        isActiveSubmit: false,
+        isError: false
       };
 
       this.onSubmitForm = this.onSubmitForm.bind(this);
       this.onChange = this.onChange.bind(this);
+      this._onErrorFormSubmit = this._onErrorFormSubmit.bind(this);
     }
 
-    onSubmitForm() {
+    onSubmitForm(evt) {
       const {uploadReviews, offerId} = this.props;
       const {rating, review} = this.state;
-      uploadReviews(rating, review, offerId);
-      this.clearState();
+      uploadReviews(rating, review, offerId, this.onErrorFormSubmit);
+      this._clearState();
+      evt.target.reset();
     }
 
     onChange(evt, value) {
       const target = evt.target.name;
-      this.setState({[target]: value});
-      this.activeForm();
+      this._setState({[target]: value});
+      this._activeForm();
     }
 
-    activeForm() {
-      if (this.state.review && this.state.rating) {
+    _activeForm() {
+      if (this.state.review.length > ValidReviewLength.MIN_LENGTH && this.state.review.length <
+        ValidReviewLength.MAX_LENGTH && this.state.rating) {
         this.setState({isActiveSubmit: true});
       } else {
         this.setState({isActiveSubmit: false});
       }
     }
 
-    clearState() {
+    _clearState() {
       this.setState(
           {
             rating: null,
             review: ``,
-            isActiveSubmit: false
+            isActiveSubmit: false,
+            isError: false
           }
       );
+    }
+
+    _onErrorFormSubmit(state = true) {
+      if (state) {
+        this.setState({
+          isError: true
+        });
+      } else {
+        this.setState({
+          isError: false
+        });
+      }
     }
 
     render() {
@@ -57,23 +79,24 @@ const withAddReviews = (Component) => {
           isActiveSubmit={this.state.isActiveSubmit}
           onChange={this.onChange}
           rating={this.state.rating}
+          isError={this.state.isError}
         />
       );
     }
   }
 
-  const mapStateToProps = () => ({});
-
-  const mapDispatchToProps = (dispatch) => ({
-    uploadReviews(rating, review, offerId) {
-      dispatch(DataOperation.uploadReviews(rating, review, offerId));
-    }
-  });
-
   WithAddReviews.propTypes = {
     uploadReviews: PropTypes.func,
     offerId: PropTypes.string
   };
+
+  const mapStateToProps = () => ({});
+
+  const mapDispatchToProps = (dispatch) => ({
+    uploadReviews(rating, review, offerId, onError) {
+      dispatch(DataOperation.uploadReviews(rating, review, offerId, onError));
+    }
+  });
 
   return connect(mapStateToProps, mapDispatchToProps)(WithAddReviews);
 };

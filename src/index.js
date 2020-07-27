@@ -10,6 +10,8 @@ import {createAPI} from "./api.js";
 import {Operation as DataOperation} from "./reducer/data/data.js";
 import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from "./reducer/user/user.js";
 
+
+// console.log(new Date(Date.now()).toISOString());
 const api = createAPI(() => {
   store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));
 });

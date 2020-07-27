@@ -52,11 +52,6 @@ const MainPage = ({currentCity, citiesOffersList, currentOffers, currentItem, on
   );
 };
 
-const mapStateToProps = (state) => ({
-  citiesOffersList: getCitiesOffersList(state),
-  currentOffers: getCurrentOffers(state)
-});
-
 MainPage.propTypes = {
   currentCity: PropTypes.string,
   currentItem: PropTypes.object.isRequired,
@@ -65,5 +60,10 @@ MainPage.propTypes = {
   currentOffers: PropTypes.array,
   citiesOffersList: PropTypes.array
 };
+
+const mapStateToProps = (state) => ({
+  citiesOffersList: getCitiesOffersList(state),
+  currentOffers: getCurrentOffers(state)
+});
 
 export default connect(mapStateToProps)(withActiveItem(MainPage));

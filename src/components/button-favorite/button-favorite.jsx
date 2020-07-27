@@ -45,6 +45,15 @@ class ButtonFavorite extends PureComponent {
   }
 }
 
+ButtonFavorite.propTypes = {
+  onFavoriteButtonClick: PropTypes.func,
+  isSignIn: PropTypes.bool,
+  offer: PropTypes.object,
+  history: PropTypes.object,
+  isFavorite: PropTypes.bool,
+  className: PropTypes.string
+};
+
 const mapStateToProps = (state) => ({
   isSignIn: getSignInStatus(state)
 });
@@ -54,14 +63,5 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataOperation.addToFavorite(offer));
   },
 });
-
-ButtonFavorite.propTypes = {
-  onFavoriteButtonClick: PropTypes.func,
-  isSignIn: PropTypes.bool,
-  offer: PropTypes.object,
-  history: PropTypes.object,
-  isFavorite: PropTypes.bool,
-  className: PropTypes.string
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ButtonFavorite));

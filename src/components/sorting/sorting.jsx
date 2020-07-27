@@ -33,6 +33,13 @@ const mapStateToProps = (state) => ({
   sortListIsOpen: getSortListIsOpen(state)
 });
 
+Sorting.propTypes = {
+  currentSortType: PropTypes.string.isRequired,
+  sortListIsOpen: PropTypes.bool.isRequired,
+  onSortListClick: PropTypes.func.isRequired,
+  onSortTypeClick: PropTypes.func.isRequired
+};
+
 const mapDispatchToProps = (dispatch) => ({
   onSortListClick() {
     dispatch(ActionCreator.sortListToggle());
@@ -41,13 +48,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.changeSortType(sort));
   },
 });
-
-Sorting.propTypes = {
-  currentSortType: PropTypes.string.isRequired,
-  sortListIsOpen: PropTypes.bool.isRequired,
-  onSortListClick: PropTypes.func.isRequired,
-  onSortTypeClick: PropTypes.func.isRequired
-};
 
 export {Sorting};
 export default connect(mapStateToProps, mapDispatchToProps)(Sorting);
