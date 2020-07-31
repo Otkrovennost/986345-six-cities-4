@@ -175,7 +175,7 @@ OfferPage.propTypes = {
   isNearbyOffersLoading: PropTypes.bool.isRequired,
   isReviewsLoading: PropTypes.bool.isRequired,
   loadOfferData: PropTypes.func.isRequired,
-  onFavoriteButtonClick: PropTypes.func.isRequired,
+  onFavoriteButtonClick: PropTypes.func,
   offerId: PropTypes.string.isRequired,
   isSignIn: PropTypes.bool.isRequired
 };

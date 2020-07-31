@@ -33,11 +33,11 @@ const ReviewsForm = ({onSubmitForm, isActiveSubmit, onChange, rating, isError}) 
 };
 
 ReviewsForm.propTypes = {
-  onSubmitForm: PropTypes.func.isRequired,
-  isActiveSubmit: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
-  rating: PropTypes.string.isRequired,
-  isError: PropTypes.bool.isRequired
+  onSubmitForm: PropTypes.func,
+  isActiveSubmit: PropTypes.bool,
+  onChange: PropTypes.func,
+  rating: PropTypes.string,
+  isError: PropTypes.bool
 };
 
 export default ReviewsForm;
