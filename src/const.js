@@ -40,3 +40,15 @@ export const ratingSettings = [
     title: `terribly`
   },
 ];
+
+export const errorBlockStyle = {
+  position: `fixed`,
+  top: 0,
+  right: 0,
+  width: `100%`,
+  color: `white`,
+  backgroundColor: `#2219B2`,
+  boxShadow: `0 10px 20px #554DD8`,
+  fontSize: `24px`,
+  textAlign: `center`
+};

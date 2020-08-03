@@ -111,7 +111,7 @@ export const Operation = {
         dispatch(ActionCreator.addToFavorite(response.data));
       });
   },
-  uploadReviews: (rating, review, offerId) => (dispatch, getState, api) => {
+  uploadReviews: (rating, review, offerId, onError) => (dispatch, getState, api) => {
     return api.post(`/comments/${offerId}`,
         {
           comment: review,
@@ -121,7 +121,12 @@ export const Operation = {
       .then((response) => {
         if (response.status === 200) {
           dispatch(Operation.loadReviews(offerId));
+          onError(false);
         }
+      })
+      .catch((err) => {
+        onError(true);
+        throw err;
       });
   }
 };
@@ -177,9 +182,13 @@ export const reducer = (state = initialState, action) => {
       const index = reloadedOffers.findIndex((el) => el.id === parsedOffer.id);
       reloadedOffers.splice(index, 1, parsedOffer);
       const reloadFavoriteOffers = reloadedOffers.filter((offer) => offer.bookmark === true);
+      const reloadedNerbyOffers = state.nearbyOffers.slice();
+      const indexNearbyOffer = reloadedNerbyOffers.findIndex((el) => el.id === parsedOffer.id);
+      reloadedNerbyOffers.splice(indexNearbyOffer, 1, parsedOffer);
       return extend(state, {
         offers: reloadedOffers,
-        favoriteOffers: reloadFavoriteOffers
+        favoriteOffers: reloadFavoriteOffers,
+        nearbyOffers: reloadedNerbyOffers
       });
   }
 

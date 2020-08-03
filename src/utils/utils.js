@@ -1,3 +1,5 @@
+const REVIEWS_NUMBER = 10;
+
 export const SORT_TYPES = {
   POPULAR: `Popular`,
   LOW_TO_HIGH: `Price: low to high`,
@@ -27,13 +29,16 @@ export const getSortedOffers = (offersList, sortType) => {
   }
 };
 
+export const sortedReviews = (reviews) => {
+  return reviews.slice(0, reviews.length).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, REVIEWS_NUMBER);
+};
+
 export const parseOffer = (data) => {
   return {
     id: data[`id`],
     city: data[`city`][`name`],
     title: data[`title`],
     coords: [data[`location`][`latitude`], data[`location`][`longitude`]],
-    zoom: data[`city`][`location`][`zoom`],
     description: data[`description`],
     price: data[`price`],
     rating: data[`rating`],
@@ -50,8 +55,7 @@ export const parseOffer = (data) => {
       isSuper: data[`host`][`is_pro`],
       name: data[`host`][`name`],
       id: data[`host`][`id`]
-    },
-    location: data[`location`]
+    }
   };
 };
 

@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
-import MainPage from "../pages/main-page/main-page.jsx";
-import OfferPage from "../pages/offer-page/offer-page.jsx";
-import SignInPage from "../pages/sign-in-page/sign-in-page.jsx";
-import FavoritesPage from "../pages/favorites-page/favorites-page.jsx";
 import {AppRoute} from "../../const.js";
 import {getSignInStatus} from "../../reducer/user/selectors.js";
 import withPrivateRoute from "../../hocs/with-private-route/with-private-route.js";
+import FavoritesPage from "../pages/favorites-page/favorites-page.jsx";
+import MainPage from "../pages/main-page/main-page.jsx";
+import OfferPage from "../pages/offer-page/offer-page.jsx";
+import SignInPage from "../pages/sign-in-page/sign-in-page.jsx";
 
 const App = ({isSignIn}) => {
   const FavoritesPagePrivate = withPrivateRoute(FavoritesPage, isSignIn, `/login`);
@@ -31,13 +31,12 @@ const App = ({isSignIn}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isSignIn: getSignInStatus(state)
-});
-
 App.propTypes = {
   isSignIn: PropTypes.bool
 };
 
+const mapStateToProps = (state) => ({
+  isSignIn: getSignInStatus(state)
+});
 
 export default connect(mapStateToProps)(App);

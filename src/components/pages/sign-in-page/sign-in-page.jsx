@@ -70,7 +70,7 @@ class SignInPage extends PureComponent {
 
 SignInPage.propTypes = {
   login: PropTypes.func.isRequired,
-  isSignIn: PropTypes.bool
+  isSignIn: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({

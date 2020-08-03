@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should NoResults render correctly 1`] = `
+<div
+  style={
+    Object {
+      "backgroundColor": "#2219B2",
+      "boxShadow": "0 10px 20px #554DD8",
+      "color": "white",
+      "fontSize": "24px",
+      "position": "fixed",
+      "right": 0,
+      "textAlign": "center",
+      "top": 0,
+      "width": "100%",
+    }
+  }
+>
+  Sorry! No comment send. Check your internet connection.
+</div>
+`;

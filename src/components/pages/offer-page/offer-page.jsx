@@ -151,23 +151,6 @@ class OfferPage extends PureComponent {
   }
 }
 
-const mapStateToProps = (state, {offerId}) => ({
-  offer: getCurrentOffer(offerId)(state),
-  nearbyOffers: getNearbyOffers(state),
-  reviews: getReviews(state),
-  isNearbyOffersLoading: getNearbyOffersStatus(state),
-  isReviewsLoading: getReviewsStatus(state),
-  isSignIn: getSignInStatus(state)
-});
-
-
-const mapDispatchToProps = (dispatch) => ({
-  loadOfferData(id) {
-    dispatch(DataOperation.loadNearbyOffers(id));
-    dispatch(DataOperation.loadReviews(id));
-  }
-});
-
 OfferPage.propTypes = {
   offer: PropTypes.shape({
     title: PropTypes.string.isRequired,
@@ -191,10 +174,27 @@ OfferPage.propTypes = {
   nearbyOffers: PropTypes.array.isRequired,
   isNearbyOffersLoading: PropTypes.bool.isRequired,
   isReviewsLoading: PropTypes.bool.isRequired,
-  loadOfferData: PropTypes.func,
+  loadOfferData: PropTypes.func.isRequired,
   onFavoriteButtonClick: PropTypes.func,
-  offerId: PropTypes.string,
-  isSignIn: PropTypes.bool
+  offerId: PropTypes.string.isRequired,
+  isSignIn: PropTypes.bool.isRequired
 };
+
+const mapStateToProps = (state, {offerId}) => ({
+  offer: getCurrentOffer(offerId)(state),
+  nearbyOffers: getNearbyOffers(state),
+  reviews: getReviews(state),
+  isNearbyOffersLoading: getNearbyOffersStatus(state),
+  isReviewsLoading: getReviewsStatus(state),
+  isSignIn: getSignInStatus(state)
+});
+
+
+const mapDispatchToProps = (dispatch) => ({
+  loadOfferData(id) {
+    dispatch(DataOperation.loadNearbyOffers(id));
+    dispatch(DataOperation.loadReviews(id));
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(OfferPage);

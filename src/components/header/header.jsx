@@ -38,15 +38,14 @@ const Header = ({email, authorizationStatus}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-  email: getEmail(state)
-});
-
-
 Header.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  email: getEmail(state)
+});
 
 export default connect(mapStateToProps)(Header);

@@ -9,7 +9,6 @@ exports[`Should RatingList render correctly 1`] = `
     className="form__rating-input visually-hidden"
     id="5-stars"
     name="rating"
-    onChange={[Function]}
     type="radio"
     value={5}
   />
@@ -33,7 +32,6 @@ exports[`Should RatingList render correctly 1`] = `
     className="form__rating-input visually-hidden"
     id="4-stars"
     name="rating"
-    onChange={[Function]}
     type="radio"
     value={4}
   />
@@ -57,7 +55,6 @@ exports[`Should RatingList render correctly 1`] = `
     className="form__rating-input visually-hidden"
     id="3-stars"
     name="rating"
-    onChange={[Function]}
     type="radio"
     value={3}
   />
@@ -81,7 +78,6 @@ exports[`Should RatingList render correctly 1`] = `
     className="form__rating-input visually-hidden"
     id="2-stars"
     name="rating"
-    onChange={[Function]}
     type="radio"
     value={2}
   />
@@ -105,7 +101,6 @@ exports[`Should RatingList render correctly 1`] = `
     className="form__rating-input visually-hidden"
     id="1-stars"
     name="rating"
-    onChange={[Function]}
     type="radio"
     value={1}
   />

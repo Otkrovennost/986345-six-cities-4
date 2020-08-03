@@ -208,4 +208,77 @@ describe(`Operation work correctly`, () => {
         });
       });
   });
+  it(`Should make a correct API call to /hotels/id/nearby`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const nearbyOffers = Operation.loadNearbyOffers(1);
+
+    apiMock
+      .onGet(`/hotels/1/nearby`)
+      .reply(200, [{fake: true}]);
+
+    return nearbyOffers(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: ActionType.LOAD_NEARBY_OFFERS,
+          payload: [{fake: true}],
+        });
+      });
+  });
+  it(`Should make a correct API call to /comments/id`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const loadedReview = Operation.loadReviews(1);
+
+    apiMock
+      .onGet(`/comments/1`)
+      .reply(200, [{fake: true}]);
+
+    return loadedReview(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: ActionType.LOAD_REVIEWS,
+          payload: [{fake: true}],
+        });
+      });
+  });
+  it(`Should make a correct API post to /favorite/id`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const addFavorite = Operation.addToFavorite(offers[0]);
+
+    apiMock
+      .onPost(`/favorite/1/1`)
+      .reply(200, [{fake: true}]);
+
+    return addFavorite(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: ActionType.ADD_TO_FAVORITE,
+          payload: [{fake: true}],
+        });
+      });
+  });
+  it(`Should make a correct API post to /comments/id`, function () {
+    const userComment = {
+      comment: `Test text`,
+      rating: 3
+    };
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const onError = (state = true) => jest.fn(state);
+    const reviewsUploader = Operation.uploadReviews(userComment.rating, userComment.review, 1, onError);
+
+    apiMock
+      .onPost(`/comments/1`)
+      .reply(200, [{fake: true}]);
+
+    return reviewsUploader(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+      });
+  });
 });

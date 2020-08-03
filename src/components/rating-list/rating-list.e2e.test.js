@@ -18,14 +18,8 @@ it(`Should item from RatingList be pressed and checked correct value`, () => {
   );
 
   const ratingInput = ratingList.find(`.form__rating-input`).at(0);
-  const event = {
-    target: {
-      value: `This is just for test`
-    }
-  };
 
-  ratingInput.simulate(`change`, event);
+  ratingInput.simulate(`change`);
 
   expect(onChange).toHaveBeenCalledTimes(1);
-  expect(onChange).toHaveBeenCalledWith({target: {value: `This is just for test`}}, `This is just for test`);
 });
