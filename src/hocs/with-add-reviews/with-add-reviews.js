@@ -28,14 +28,14 @@ const withAddReviews = (Component) => {
     onSubmitForm(evt) {
       const {uploadReviews, offerId} = this.props;
       const {rating, review} = this.state;
-      uploadReviews(rating, review, offerId, this.onErrorFormSubmit);
+      uploadReviews(rating, review, offerId, this._onErrorFormSubmit);
       this._clearState();
       evt.target.reset();
     }
 
-    onChange(evt, value) {
+    onChange(evt) {
       const target = evt.target.name;
-      this._setState({[target]: value});
+      this.setState({[target]: evt.target.value});
       this._activeForm();
     }
 
