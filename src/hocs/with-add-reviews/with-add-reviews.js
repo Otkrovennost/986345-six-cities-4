@@ -20,12 +20,12 @@ const withAddReviews = (Component) => {
         isError: false
       };
 
-      this.onSubmitForm = this.onSubmitForm.bind(this);
+      this.onFormSubmit = this.onFormSubmit.bind(this);
       this.onChange = this.onChange.bind(this);
       this._onErrorFormSubmit = this._onErrorFormSubmit.bind(this);
     }
 
-    onSubmitForm(evt) {
+    onFormSubmit(evt) {
       const {uploadReviews, offerId} = this.props;
       const {rating, review} = this.state;
       uploadReviews(rating, review, offerId, this._onErrorFormSubmit);
@@ -75,7 +75,7 @@ const withAddReviews = (Component) => {
       return (
         <Component
           {...this.props}
-          onSubmitForm={this.onSubmitForm}
+          onFormSubmit={this.onFormSubmit}
           isActiveSubmit={this.state.isActiveSubmit}
           onChange={this.onChange}
           rating={this.state.rating}

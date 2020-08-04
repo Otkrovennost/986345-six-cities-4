@@ -2,6 +2,7 @@ import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
 import leaflet from "leaflet";
 
+const ZOOM = 12;
 const icon = leaflet.icon({
   iconUrl: `../img/pin.svg`,
   iconSize: [27, 39]
@@ -16,15 +17,15 @@ class Map extends PureComponent {
     super(props);
     this._map = null;
     this._layer = null;
-    this.mapRef = createRef();
+    this._mapRef = createRef();
   }
 
   componentDidMount() {
     const {offers, currentItem, activeOffer} = this.props;
     const city = offers[0].coords;
 
-    const zoom = 12;
-    this._map = leaflet.map(this.mapRef.current, {
+    const zoom = ZOOM;
+    this._map = leaflet.map(this._mapRef.current, {
       center: city,
       zoom,
       zoomControl: false,
@@ -87,12 +88,12 @@ class Map extends PureComponent {
   }
 
   componentWillUnmount() {
-    this.mapRef.current = null;
+    this._mapRef.current = null;
   }
 
   render() {
     return (
-      <div id="map" style={{height: `100%`}} ref={this.mapRef}/>
+      <div id="map" style={{height: `100%`}} ref={this._mapRef}/>
     );
   }
 }

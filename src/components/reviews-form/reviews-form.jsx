@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import RatingList from "../rating-list/rating-list.jsx";
 import ErrorBlock from "../error-block/error-block.jsx";
 
-const ReviewsForm = ({onSubmitForm, isActiveSubmit, onChange, rating, isError}) => {
+const ReviewsForm = ({onFormSubmit, isActiveSubmit, onChange, rating, isError}) => {
   return (
     <form
       onSubmit={(evt) => {
         evt.preventDefault();
-        onSubmitForm(evt);
+        onFormSubmit(evt);
       }}
       className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -31,7 +31,7 @@ const ReviewsForm = ({onSubmitForm, isActiveSubmit, onChange, rating, isError}) 
 };
 
 ReviewsForm.propTypes = {
-  onSubmitForm: PropTypes.func,
+  onFormSubmit: PropTypes.func,
   isActiveSubmit: PropTypes.bool,
   onChange: PropTypes.func,
   rating: PropTypes.string,

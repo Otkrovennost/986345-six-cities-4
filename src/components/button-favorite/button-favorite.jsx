@@ -10,10 +10,10 @@ class ButtonFavorite extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.onFavoriteClick = this.onFavoriteClick.bind(this);
+    this._onFavoriteClick = this._onFavoriteClick.bind(this);
   }
 
-  onFavoriteClick() {
+  _onFavoriteClick() {
     const {history, onFavoriteButtonClick, isSignIn, offer} = this.props;
     if (!isSignIn) {
       return history.push(AppRoute.SIGN_IN);
@@ -30,7 +30,7 @@ class ButtonFavorite extends PureComponent {
       <button
         className={isFavorite ? `${buttonClassName} ` + `${buttonClassName}` + `--active` + ` button` : `${buttonClassName}` + ` button`}
         type="button"
-        onClick={this.onFavoriteClick}
+        onClick={this._onFavoriteClick}
       >
         <svg
           className={`${className === ButtonCardClass.PLACE_CARD ? `place-card__bookmark-icon` : `property__bookmark-icon`}`}

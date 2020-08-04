@@ -10,18 +10,18 @@ const withActiveItem = (Component) => {
         currentItem: {}
       };
 
-      this._itemOnMouseOver = this._itemOnMouseOver.bind(this);
-      this._itemOnMouseOut = this._itemOnMouseOut.bind(this);
+      this._onItemMouseOver = this._onItemMouseOver.bind(this);
+      this._onItemMouseOut = this._onItemMouseOut.bind(this);
     }
 
 
-    _itemOnMouseOver(item) {
+    _onItemMouseOver(item) {
       this.setState({
         currentItem: item
       });
     }
 
-    _itemOnMouseOut() {
+    _onItemMouseOut() {
       this.setState({
         currentItem: {}
       });
@@ -32,8 +32,8 @@ const withActiveItem = (Component) => {
         <Component
           {...this.props}
           currentItem={this.state.currentItem}
-          onItemMouseOver={this._itemOnMouseOver}
-          onItemMouseOut={this._itemOnMouseOut}
+          onItemMouseOver={this._onItemMouseOver}
+          onItemMouseOut={this._onItemMouseOut}
         />
       );
     }

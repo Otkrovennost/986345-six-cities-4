@@ -4,7 +4,7 @@ import {ActionCreator} from "../../reducer/data/data";
 import PropTypes from "prop-types";
 import {getCurrentSortType, getSortListIsOpen} from "../../reducer/data/selectors.js";
 
-const sortingType = [`Popular`, `Price: low to high`, `Price: high to low`, `Top rated first`];
+const sortingTypes = [`Popular`, `Price: low to high`, `Price: high to low`, `Top rated first`];
 
 const Sorting = ({currentSortType, sortListIsOpen, onSortListClick, onSortTypeClick}) => {
   const isOpenSortClass = sortListIsOpen ? `places__options places__options--custom places__options--opened` : `places__options places__options--custom`;
@@ -18,7 +18,7 @@ const Sorting = ({currentSortType, sortListIsOpen, onSortListClick, onSortTypeCl
         </svg>
       </span>
       <ul className={isOpenSortClass}>
-        {sortingType.map((type, i) => {
+        {sortingTypes.map((type, i) => {
           return (
             <li key={`sortType-${i}`} className="places__option" tabIndex="0" onClick={() =>onSortTypeClick(type)}>   {type}
             </li>);
